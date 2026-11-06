@@ -1,0 +1,59 @@
+appId: com.warehouse.box_management_system
+---
+# ==============================================================================
+# PENGUJIAN 1 FITUR: REGISTRASI & TAMBAH BOX GUDANG BARU (UAT-04)
+# Dapat dijalankan langsung via Maestro Studio atau CLI:
+# maestro test maestro/uji_satu_fitur_tambah.yaml
+# ==============================================================================
+
+# 1. Pastikan aplikasi berjalan dan login jika perlu
+- launchApp:
+    clearState: false
+
+- runFlow:
+    when:
+      visible: "Masuk Akun"
+    commands:
+      - tapOn: "Email Petugas"
+      - inputText: "gudang@udb.ac.id"
+      - tapOn: "Kata Sandi"
+      - inputText: "Gudang123!"
+      - tapOn: "Masuk ke Sistem"
+
+# 2. Ketuk Tombol Tambah Box di Pojok Kanan Bawah
+- tapOn: "Tambah Box Baru"
+
+# 3. Verifikasi Form Registrasi Box Terbuka
+- assertVisible: "Form Registrasi Box"
+
+# 4. Input Data Spesifikasi Box
+- tapOn: "Nama / Deskripsi Box"
+- inputText: "Box Sparepart Mesin A1"
+
+- tapOn: "Kategori Barang"
+- inputText: "Sparepart"
+
+- tapOn: "Panjang (cm)"
+- inputText: "40"
+
+- tapOn: "Lebar (cm)"
+- inputText: "30"
+
+- tapOn: "Tinggi (cm)"
+- inputText: "25"
+
+- tapOn: "Stok Awal"
+- inputText: "15"
+
+# 5. Verifikasi Estimasi Volume Terkalkulasi Otomatis Secara Realtime
+- assertVisible: "Estimasi Volume:.*"
+
+# 6. Simpan Data ke Database Supabase
+- tapOn: "Simpan Box"
+
+# 7. Verifikasi Berhasil Tersimpan dan Tampil di Katalog
+- assertVisible: ".*berhasil ditambahkan.*"
+- assertVisible: "Box Sparepart Mesin A1"
+
+# Ambil bukti screenshot
+- takeScreenshot: screenshots/02_hasil_uji_fitur_tambah

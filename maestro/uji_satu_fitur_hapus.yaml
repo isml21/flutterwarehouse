@@ -1,0 +1,61 @@
+appId: com.warehouse.box_management_system
+---
+# ==============================================================================
+# PENGUJIAN 1 FITUR: HAPUS ITEM / BOX DARI SISTEM (UAT-09 & UAT-10)
+# Dapat dijalankan langsung via Maestro Studio atau CLI:
+# maestro test maestro/uji_satu_fitur_hapus.yaml
+# ==============================================================================
+
+# 1. Pastikan aplikasi berjalan dan login jika perlu
+- launchApp:
+    clearState: false
+
+- runFlow:
+    when:
+      visible: "Masuk Akun"
+    commands:
+      - tapOn: "Email Petugas"
+      - inputText: "gudang@udb.ac.id"
+      - tapOn: "Kata Sandi"
+      - inputText: "Gudang123!"
+      - tapOn: "Masuk ke Sistem"
+
+# 2. Pastikan berada di Layar Katalog Box Gudang
+- assertVisible: "Katalog Box Gudang"
+
+# ------------------------------------------------------------------------------
+# SKENARIO A: PEMBATALAN HAPUS (Pencegahan Human Error / Batal Hapus)
+# ------------------------------------------------------------------------------
+# Ketuk ikon tong sampah (delete) pada kartu box
+- tapOn:
+    id: "btn_delete_.*"
+
+# Verifikasi Modal Dialog Konfirmasi Glassmorphic Muncul
+- assertVisible: "Hapus Box dari Sistem?"
+- assertVisible: "Tindakan ini permanen.*"
+
+# Ketuk tombol 'Batal'
+- tapOn: "Batal"
+
+# Verifikasi dialog tertutup dan item box tetap aman di katalog
+- assertNotVisible: "Hapus Box dari Sistem?"
+- assertVisible: "Katalog Box Gudang"
+
+# ------------------------------------------------------------------------------
+# SKENARIO B: EKSEKUSI HAPUS BOX (Permanen)
+# ------------------------------------------------------------------------------
+# Ketuk kembali ikon hapus
+- tapOn:
+    id: "btn_delete_.*"
+
+# Verifikasi dialog muncul kembali
+- assertVisible: "Hapus Box dari Sistem?"
+
+# Ketuk tombol 'Hapus Box' untuk konfirmasi penghapusan permanen
+- tapOn: "Hapus Box"
+
+# Verifikasi notifikasi Snackbar / Toast keberhasilan muncul
+- assertVisible: ".*berhasil dihapus.*"
+
+# Ambil bukti screenshot
+- takeScreenshot: screenshots/06_hasil_uji_fitur_hapus
