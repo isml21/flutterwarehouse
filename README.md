@@ -1,3 +1,5 @@
+
+```markdown
 # MyWarehouse — Warehouse Inventory & QR Tracking System
 ### Proyek Ujian Tengah Semester (UTS) Mata Kuliah Mobile Testing
 **Fakultas Ilmu Komputer • Universitas Duta Bangsa Surakarta**  
@@ -11,7 +13,7 @@
 
 | No | Nama Mahasiswa | NIM | Kelas | Peran / Kontribusi |
 |:---:|---|:---:|:---:|---|
-| 1 | **Ismail Fikron** *(Sesuaikan)* | *(Isi NIM Anda)* | TI23B | **Lead QA & Full-Stack Flutter Developer**<br>• Arsitektur aplikasi & state management Riverpod<br>• Implementasi fitur Hapus Box, Glassmorphism UI, dan Supabase Backend |
+| 1 | **Ismail Fikrun Amin** | *(Isi NIM Anda)* | TI23B | **Lead QA & Full-Stack Flutter Developer**<br>• Arsitektur aplikasi & state management Riverpod<br>• Implementasi fitur Hapus Box, Glassmorphism UI, dan Supabase Backend |
 | 2 | *(Nama Anggota 2)* | *(NIM)* | TI23B | **Automate Testing Engineer**<br>• Penulisan skrip otomasi pengujian Maestro YAML (Flow 01 s/d 06)<br>• Eksekusi pengujian regresi dan verifikasi assertion |
 | 3 | *(Nama Anggota 3)* | *(NIM)* | TI23B | **UAT Coordinator & Documentation**<br>• Penyusunan dokumen User Acceptance Testing (10 Skenario UAT)<br>• Dokumentasi laporan temuan bug dan video penjelasan pengujian |
 
@@ -23,7 +25,7 @@
   👉 **`[ISI TAUTAN YOUTUBE / GOOGLE DRIVE ANDA DI SINI]`**  
   *(Mencakup perkenalan anggota/NIM/peran, demonstrasi fitur aplikasi, penjelasan skenario UAT, dan live demo eksekusi otomasi Maestro).*
 - 🐙 **Tautan Repository Git (GitHub / GitLab):**  
-  👉 **`[ISI TAUTAN REPOSITORY GITHUB/GITLAB ANDA DI SINI]`**  
+  👉 **`https://github.com/isml21/flutterwarehouse.git`**
 - 📄 **Dokumen Laporan UAT (Markdown / PDF):**  
   👉 [`LAPORAN_UAT.md`](file:///c:/xampp/FLUTTER/TUGAS%20MOBILETESTING/LAPORAN_UAT.md) dan spreadsheet [`UAT.UDB Warehouse.xlsx`](file:///c:/xampp/FLUTTER/TUGAS%20MOBILETESTING/UAT.UDB%20Warehouse.xlsx)
 - 📁 **Berkas Otomasi Pengujian Maestro:**  
@@ -50,25 +52,28 @@
 6. **Desain Modern Glassmorphism**: Tampilan visual mutakhir berbasis efek kaca akrilik (*frosted glass*) dengan *ambient luminous background* dan logo baru MyWarehouse.
 
 ### 1.4 Alur Pengguna (*User Flow*)
+
 ```
+
 [Buka Aplikasi]
-       │
-       ▼
+│
+▼
 [Layar Login] ──(Validasi Form / Kredensial Valid)──► [Katalog Box Gudang]
-                                                             │
-        ┌────────────────────────────────────────────────────┼──────────────────────────────────────────────────┐
-        ▼                                                    ▼                                                  ▼
-[Tambah Box Baru]                                   [Pilih Kartu Box]                                    [Scan QR Box]
-  • Kode acak unik                                    • Lihat Spesifikasi Dimensi                          • Sorot kamera ke QR
-  • Live volume preview                               • Quick Stock In/Out                                 • Fallback manual
-  • Auto-generate QR Code                             • Hapus Item Box                                     • Buka Detail Box
-        │                                                    │                                                  │
-        └─────────────────────────────────┬──────────────────┴──────────────────────────────────────────────────┘
-                                          ▼
-                         [Sinkronisasi Database Supabase]
-                                          │
-                                          ▼
-                         [Pembaruan Realtime Katalog & KPI]
+│
+┌────────────────────────────────────────────────────┼──────────────────────────────────────────────────┐
+▼                                                    ▼                                                  ▼
+[Tambah Box Baru]                                    [Pilih Kartu Box]                                  [Scan QR Box]
+• Kode acak unik                                     • Lihat Spesifikasi Dimensi                        • Sorot kamera ke QR
+• Live volume preview                                • Quick Stock In/Out                               • Fallback manual
+• Auto-generate QR Code                              • Hapus Item Box                                   • Buka Detail Box
+│                                                    │                                                  │
+└─────────────────────────────────┬──────────────────┴──────────────────────────────────────────────────┘
+▼
+[Sinkronisasi Database Supabase]
+│
+▼
+[Pembaruan Realtime Katalog & KPI]
+
 ```
 
 ### 1.5 Batasan Pengujian (*Scope & Limitations*)
@@ -119,10 +124,13 @@ flutter run
 # 3. Atau build berkas APK siap pasang
 flutter build apk --debug
 # Hasil APK tersimpan di: build/app/outputs/flutter-apk/app-debug.apk
+
 ```
 
 ### 3.3 Menjalankan Pengujian Otomatis Maestro
+
 Pastikan emulator Android aktif dan terdeteksi di ADB (`adb devices`):
+
 ```bash
 # Menjalankan seluruh test suite sekaligus
 maestro test maestro/run_all.yaml
@@ -132,11 +140,14 @@ maestro test maestro/01_auth_flow.yaml
 maestro test maestro/02_box_registration_flow.yaml
 maestro test maestro/04_stock_transaction_flow.yaml
 maestro test maestro/06_delete_box_flow.yaml
+
 ```
 
 ### 3.4 Menjalankan Unit Testing
+
 ```bash
 flutter test
+
 ```
 
 ---
@@ -144,10 +155,15 @@ flutter test
 ## 🌿 4. Struktur Git Repository & Riwayat Pengembangan
 
 Repositori ini dikelola menggunakan konvensi **GitFlow** dengan commit bertahap sejak awal pengembangan:
-- **`main`**: Branch produksi dengan rilis versi terverifikasi (**Tag: `v1.1.0`**).
-- **`develop`**: Branch integrasi pengembangan aktif.
-- **`feat/auth-module`**: Pengembangan modul otentikasi Supabase.
-- **`feat/box-catalog`**: Pengembangan modul katalog inventaris dan form registrasi box.
-- **`feat/qr-scanner`**: Pengembangan scanner kamera dan modal transaksi stok.
-- **`test/mobile-testing-maestro`**: Konfigurasi otomasi Maestro E2E dan laporan UAT.
-- **`feat/delete-box-and-glassmorphism-ui`**: Fitur hapus box permanen, redesain visual Glassmorphism, dan logo MyWarehouse baru.
+
+* **`main`**: Branch produksi dengan rilis versi terverifikasi (**Tag: `v1.1.0**`).
+* **`develop`**: Branch integrasi pengembangan aktif.
+* **`feat/auth-module`**: Pengembangan modul otentikasi Supabase.
+* **`feat/box-catalog`**: Pengembangan modul katalog inventaris dan form registrasi box.
+* **`feat/qr-scanner`**: Pengembangan scanner kamera dan modal transaksi stok.
+* **`test/mobile-testing-maestro`**: Konfigurasi otomasi Maestro E2E dan laporan UAT.
+* **`feat/delete-box-and-glassmorphism-ui`**: Fitur hapus box permanen, redesain visual Glassmorphism, dan logo MyWarehouse baru.
+
+```
+
+```
