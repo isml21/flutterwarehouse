@@ -1,0 +1,25 @@
+appId: com.warehouse.box_management_system
+---
+# ==============================================================================
+# SUITE LENGKAP END-TO-END MOBILE TESTING (MAESTRO)
+# Aplikasi: Box Management System (Warehouse & QR Tracking)
+# Target Package: com.warehouse.box_management_system
+# ==============================================================================
+
+# 1. Alur Autentikasi & Validasi Form Login (TC-AUTH-01 s/d TC-AUTH-05)
+- runFlow: 01_auth_flow.yaml
+
+# 2. Alur Registrasi Box Baru & Validasi Dimensi (TC-BOX-01, TC-BOX-02, TC-BOX-05)
+- runFlow: 02_box_registration_flow.yaml
+
+# 3. Alur Pencarian & Filter Status Stok (TC-BOX-03, TC-BOX-04, TC-BOX-05)
+- runFlow: 03_catalog_search_filter_flow.yaml
+
+# 4. Alur Transaksi Stok IN/OUT & Validasi Over-Withdrawal (TC-TRX-03, TC-TRX-04, TC-TRX-05)
+- runFlow: 04_stock_transaction_flow.yaml
+
+# 5. Alur Scanner QR & Fallback Pencarian Manual (TC-TRX-01, TC-TRX-02)
+- runFlow: 05_qr_scanner_manual_flow.yaml
+
+# 6. Alur Hapus Item / Box & Konfirmasi Keamanan (TC-DEL-01, TC-DEL-02)
+- runFlow: 06_delete_box_flow.yaml

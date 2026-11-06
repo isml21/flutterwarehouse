@@ -1,0 +1,26 @@
+appId: com.warehouse.box_management_system # Sesuaikan dengan App ID (di build.gradle.kts: com.warehouse.box_management_system)
+---
+- launchApp
+
+# 1. Menekan Tombol Tambah Box Baru (FAB)
+- tapOn: "Tambah Box Baru"
+
+# 2. Mengisi Kode Box (Bisa menekan tombol Acak untuk kode otomatis)
+- tapOn: "Acak"
+
+# 3. Mengisi Nama Box
+- tapOn: "Misal: Kardus Kemasan Ekspor Medium"
+- inputText: "Kardus Sparepart Mesin"
+
+# 4. Mengisi Lokasi Penyimpanan (Scroll ke bawah)
+- scroll
+- tapOn: "Rak A-01"
+- eraseText
+- inputText: "Rak B-03"
+
+# 5. Menekan Tombol Simpan Box & Generate QR Code
+- tapOn: "Simpan Box & Generate QR Code"
+
+# 6. Menutup Dialog QR Code yang muncul setelah tersimpan
+- assertVisible: "Warehouse QR Identifier"
+- back

@@ -1,0 +1,11 @@
+appId: com.warehouse.box_management_system
+---
+# Subflow: Login ke Akun Petugas Gudang
+- launchApp
+- runFlow:
+    when:
+      visible: "Masuk Sekarang"
+    commands:
+      - tapOn: "Isi Akun Demo Cepat"
+      - tapOn: "Masuk Sekarang"
+      - assertVisible: "Katalog Box Gudang"

@@ -1,0 +1,47 @@
+appId: com.warehouse.box_management_system
+---
+# ==============================================================================
+# TEST SCENARIO: TS-06 FITUR HAPUS ITEM / BOX DARI SISTEM GUDANG
+# UAT Reference: TC-DEL-01 (Batal Hapus), TC-DEL-02 (Konfirmasi Hapus Box)
+# ==============================================================================
+
+# 1. Pastikan Petugas Sudah Login
+- runFlow: subflows/login.yaml
+
+# 2. Pastikan berada di Katalog Box Gudang
+- assertVisible: "Katalog Box Gudang"
+
+# ------------------------------------------------------------------------------
+# TC-DEL-01: Pembatalan Hapus Box (Negative / Abort Flow)
+# ------------------------------------------------------------------------------
+# Ketuk tombol hapus pada kartu item box
+- tapOn:
+    id: "btn_delete_.*"
+
+# Verifikasi Modal Dialog Konfirmasi Glassmorphic Muncul
+- assertVisible: "Hapus Box dari Sistem?"
+- assertVisible: "Tindakan ini permanen.*"
+
+# Ketuk Tombol 'Batal'
+- tapOn: "Batal"
+
+# Verifikasi Dialog Tertutup dan Data Tetap Ada di Katalog
+- assertNotVisible: "Hapus Box dari Sistem?"
+- assertVisible: "Katalog Box Gudang"
+
+# ------------------------------------------------------------------------------
+# TC-DEL-02: Konfirmasi Hapus Box dari Katalog (Positive / Confirmation Flow)
+# ------------------------------------------------------------------------------
+# Ketuk tombol hapus kembali
+- tapOn:
+    id: "btn_delete_.*"
+
+# Verifikasi Dialog Muncul
+- assertVisible: "Hapus Box dari Sistem?"
+
+# Ketuk Tombol 'Hapus Box' untuk mengeksekusi penghapusan
+- tapOn: "Hapus Box"
+
+# Verifikasi Notifikasi Sukses Penghapusan Muncul
+- assertVisible: ".*berhasil dihapus.*"
+
