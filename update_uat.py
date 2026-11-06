@@ -1,29 +1,34 @@
+import os
 import openpyxl
+from copy import copy
 
 def update_uat_workbook():
-    import os
-    filename = 'UAT.UDB Warehouse.xlsx' if os.path.exists('UAT.UDB Warehouse.xlsx') else 'UAT_UDB_Market_Place.xlsx'
+    filename = 'UAT.UDB Warehouse.xlsx'
+    if not os.path.exists(filename):
+        filename = 'UAT_UDB_Market_Place.xlsx'
+    
+    print(f"Loading workbook: {filename}")
     wb = openpyxl.load_workbook(filename)
 
     # ==========================================
     # 1. SHEET: Petunjuk
     # ==========================================
     ws_petunjuk = wb['Petunjuk']
-    ws_petunjuk['A1'] = "Studi Kasus Mobile Testing: Box Management System (Warehouse & QR Tracking)"
+    ws_petunjuk['A1'] = "Studi Kasus Mobile Testing: MyWarehouse (Warehouse Inventory & QR Tracking)"
     ws_petunjuk['A2'] = "Mata Kuliah Mobile Testing • Teknik Informatika • Universitas Duta Bangsa Surakarta"
-    ws_petunjuk['B4'] = "Box Management System (Warehouse Inventory & QR Tracking System), versi mobile Flutter (Android) dengan Glassmorphic UI"
-    ws_petunjuk['B5'] = "F-01 Autentikasi Petugas Gudang • F-02 Manajemen Katalog, Tambah & Hapus Box • F-03 Scanner QR Code & Transaksi Stok (In/Out) • F-04 Modern Glassmorphism UI"
+    ws_petunjuk['B4'] = "MyWarehouse (Warehouse Inventory & QR Tracking System), versi mobile Flutter (Android) dengan Glassmorphic UI & Logo Baru"
+    ws_petunjuk['B5'] = "F-01 Autentikasi Petugas Gudang • F-02 Manajemen Katalog (Tambah & Hapus Box) • F-03 Scanner QR Code & Transaksi Stok (In/Out) • F-04 Modern Glassmorphism UI"
     ws_petunjuk['B6'] = "Export PDF/Excel, Pelacakan GPS Multi-Gudang, Integrasi Payment Gateway / Invoicing"
     ws_petunjuk['A7'] = "Akun admin/petugas"
     ws_petunjuk['B7'] = "admin@gudang.com / warehouse123 (Tersedia tombol 'Isi Akun Demo Cepat')"
     ws_petunjuk['A8'] = "Akun pendaftaran"
     ws_petunjuk['B8'] = "Pendaftaran mandiri melalui tombol 'Daftar akun baru' pada halaman login"
-    ws_petunjuk['B9'] = "Dijalankan tim QA (mahasiswa). Menguji verifikasi fungsional, validasi input form, boundary stok/dimensi, dan penanganan error."
+    ws_petunjuk['B9'] = "Dijalankan tim QA (mahasiswa). Menguji verifikasi fungsional, validasi input form, boundary stok/dimensi, fitur hapus, dan penanganan error."
     ws_petunjuk['B10'] = "Dijalankan perwakilan pengguna (Staff Gudang & Supervisor Inventaris). Bahasa operasional sehari-hari gudang."
     ws_petunjuk['B11'] = "Catat setiap cacat/FAIL yang ditemukan saat pengujian. Tautkan ID bug ke kolom Bug ID."
 
     # ==========================================
-    # 2. SHEET: Test Case (A5:L19)
+    # 2. SHEET: Test Case (Row 5 to 22)
     # ==========================================
     ws_tc = wb['Test Case']
     test_cases = [
@@ -40,7 +45,7 @@ def update_uat_workbook():
             "Login berhasil, muncul notifikasi 'Selamat datang kembali!', dan masuk ke katalog box",
             "PASS",
             "-",
-            "QA Tester / 26-10-2026"
+            "QA Tester / 06-11-2026"
         ),
         (
             "TC-AUTH-02",
@@ -54,7 +59,7 @@ def update_uat_workbook():
             "Muncul pesan validasi 'Email wajib diisi' dan 'Kata sandi wajib diisi', form tidak diproses",
             "PASS",
             "-",
-            "QA Tester / 26-10-2026"
+            "QA Tester / 06-11-2026"
         ),
         (
             "TC-AUTH-03",
@@ -68,7 +73,7 @@ def update_uat_workbook():
             "Muncul pesan validasi 'Format email tidak valid' di bawah input email",
             "PASS",
             "-",
-            "QA Tester / 26-10-2026"
+            "QA Tester / 06-11-2026"
         ),
         (
             "TC-AUTH-04",
@@ -82,7 +87,7 @@ def update_uat_workbook():
             "Validasi aktif dan memunculkan teks error 'Kata sandi minimal 6 karakter'",
             "PASS",
             "-",
-            "QA Tester / 26-10-2026"
+            "QA Tester / 06-11-2026"
         ),
         (
             "TC-AUTH-05",
@@ -96,7 +101,7 @@ def update_uat_workbook():
             "Email dan password terisi otomatis secara instan beserta snackbar notifikasi info",
             "PASS",
             "-",
-            "QA Tester / 26-10-2026"
+            "QA Tester / 06-11-2026"
         ),
 
         # TS-02 Katalog & Registrasi
@@ -112,7 +117,7 @@ def update_uat_workbook():
             "Box tersimpan di Supabase, stok tercatat 15 unit (In Stock), dan Dialog QR Code tampil otomatis",
             "PASS",
             "-",
-            "QA Tester / 26-10-2026"
+            "QA Tester / 06-11-2026"
         ),
         (
             "TC-BOX-02",
@@ -126,7 +131,7 @@ def update_uat_workbook():
             "Muncul pesan error validasi '> 0' di bawah kolom panjang; data tidak tersimpan",
             "PASS",
             "-",
-            "QA Tester / 26-10-2026"
+            "QA Tester / 06-11-2026"
         ),
         (
             "TC-BOX-03",
@@ -140,7 +145,7 @@ def update_uat_workbook():
             "Daftar box terfilter secara instan dan akurat; jika tidak cocok muncul ilustrasi empty state",
             "PASS",
             "-",
-            "QA Tester / 26-10-2026"
+            "QA Tester / 06-11-2026"
         ),
         (
             "TC-BOX-04",
@@ -154,7 +159,7 @@ def update_uat_workbook():
             "Filter bekerja akurat sesuai kategori stok; badge warna status sesuai aturan bisnis",
             "PASS",
             "-",
-            "QA Tester / 26-10-2026"
+            "QA Tester / 06-11-2026"
         ),
         (
             "TC-BOX-05",
@@ -168,18 +173,32 @@ def update_uat_workbook():
             "QR Code ter-render sempurna menggunakan qr_flutter, tombol salin berhasil menyalin teks UUID ke clipboard sistem",
             "PASS",
             "-",
-            "QA Tester / 26-10-2026"
+            "QA Tester / 06-11-2026"
         ),
         (
             "TC-BOX-06",
             "TS-02 Katalog & Registrasi",
-            "Penghapusan item box dari inventaris dengan dialog konfirmasi",
+            "Penghapusan item box dari inventaris dengan dialog konfirmasi keamanan (Positif)",
             "Positif",
             "Petugas login; Kartu box tampil di katalog",
             "1. Ketuk ikon tong sampah (Hapus Box) pada kartu box atau lembar detail\n2. Periksa modal dialog konfirmasi kaca\n3. Ketuk tombol 'Hapus Box'",
             "Box target penghapusan",
             "Data box dan seluruh transaksi terkait dihapus dari Supabase (cascade), notifikasi sukses muncul, dan daftar diperbarui",
             "Box berhasil dihapus dari database dan state katalog langsung tersinkronisasi secara realtime",
+            "PASS",
+            "-",
+            "QA Tester / 06-11-2026"
+        ),
+        (
+            "TC-BOX-07",
+            "TS-02 Katalog & Registrasi",
+            "Pembatalan penghapusan box pada modal dialog konfirmasi kaca (Negatif)",
+            "Negatif",
+            "Petugas login; Kartu box tampil di katalog",
+            "1. Ketuk ikon tong sampah (Hapus Box)\n2. Dialog konfirmasi 'Hapus Box dari Sistem?' muncul\n3. Ketuk tombol 'Batal'",
+            "Tombol 'Batal'",
+            "Dialog tertutup, proses delete dibatalkan, dan data box tetap utuh berada di katalog tanpa perubahan",
+            "Dialog konfirmasi tertutup seketika dan data box tidak terhapus",
             "PASS",
             "-",
             "QA Tester / 06-11-2026"
@@ -198,7 +217,7 @@ def update_uat_workbook():
             "Kamera membaca QR code dengan cepat, haptic bergetar, dan BottomSheet transaksi box langsung terbuka",
             "PASS",
             "-",
-            "QA Tester / 26-10-2026"
+            "QA Tester / 06-11-2026"
         ),
         (
             "TC-TRX-02",
@@ -212,7 +231,7 @@ def update_uat_workbook():
             "Dialog input manual muncul, data ditemukan, dan detail box terbuka normal tanpa kendala kamera",
             "PASS",
             "-",
-            "QA Tester / 26-10-2026"
+            "QA Tester / 06-11-2026"
         ),
         (
             "TC-TRX-03",
@@ -226,7 +245,7 @@ def update_uat_workbook():
             "Stok bertambah 10 unit di database, indikator kartu dan riwayat transaksi langsung terupdate realtime",
             "PASS",
             "-",
-            "QA Tester / 26-10-2026"
+            "QA Tester / 06-11-2026"
         ),
         (
             "TC-TRX-04",
@@ -240,7 +259,7 @@ def update_uat_workbook():
             "Stok berkurang tepat 3 unit, status stok berubah dinamis jika menyentuh batas low stock, riwayat transaksi tercatat",
             "PASS",
             "-",
-            "QA Tester / 26-10-2026"
+            "QA Tester / 06-11-2026"
         ),
         (
             "TC-TRX-05",
@@ -254,16 +273,42 @@ def update_uat_workbook():
             "Tombol konfirmasi disabled secara otomatis dan alert warning merah mencegah terjadinya stok minus",
             "PASS",
             "-",
-            "QA Tester / 26-10-2026"
+            "QA Tester / 06-11-2026"
+        ),
+
+        # TS-04 UI & Desain Visual
+        (
+            "TC-UI-01",
+            "TS-04 UI & Desain Visual",
+            "Verifikasi tampilan Glassmorphism (efek kaca) dan logo baru MyWarehouse",
+            "Positif",
+            "Aplikasi dijalankan pada perangkat Android",
+            "1. Buka layar Katalog, Tambah Box, dan BottomSheet Transaksi\n2. Periksa estetika frosted glass blur, specular border, dan logo baru",
+            "Elemen GlassContainer dan logo MyWarehouse",
+            "Seluruh kartu, modal sheet, dan dialog menampilkan efek kaca buram transparan yang elegan, kontras teks terjaga tajam, dan logo proporsional 1:1",
+            "Desain Glassmorphism ter-render sempurna tanpa lag, logo baru MyWarehouse tampil tajam di AppBar dan Login",
+            "PASS",
+            "-",
+            "QA Tester / 06-11-2026"
         ),
     ]
 
+    ref_row_tc = 5
     for i, row_data in enumerate(test_cases, start=5):
         for col_idx, val in enumerate(row_data, start=1):
-            ws_tc.cell(row=i, column=col_idx, value=val)
+            cell = ws_tc.cell(row=i, column=col_idx, value=val)
+            # Copy style from reference cell
+            ref_cell = ws_tc.cell(row=ref_row_tc, column=col_idx)
+            cell.font = copy(ref_cell.font)
+            cell.border = copy(ref_cell.border)
+            cell.fill = copy(ref_cell.fill)
+            cell.alignment = copy(ref_cell.alignment)
+
+    max_tc_row = 4 + len(test_cases)
+    print(f"Updated Sheet 'Test Case': {len(test_cases)} test cases (rows 5 to {max_tc_row})")
 
     # ==========================================
-    # 3. SHEET: UAT (A5:K13)
+    # 3. SHEET: UAT (Row 5 to 15)
     # ==========================================
     ws_uat = wb['UAT']
     uat_scenarios = [
@@ -278,7 +323,7 @@ def update_uat_workbook():
             5,
             "Proses login sangat cepat, tombol demo cepat sangat membantu saat pengujian di lapangan.",
             "Budi Santoso (Staff Gudang)",
-            "26/10/2026"
+            "06/11/2026"
         ),
         (
             "UAT-02",
@@ -291,7 +336,7 @@ def update_uat_workbook():
             5,
             "Pesan validasi langsung terlihat dan tidak membuat bingung.",
             "Budi Santoso (Staff Gudang)",
-            "26/10/2026"
+            "06/11/2026"
         ),
         (
             "UAT-03",
@@ -304,7 +349,7 @@ def update_uat_workbook():
             5,
             "Sangat informatif, memudahkan pemantauan stok menipis tanpa perlu hitung manual.",
             "Hendra Wijaya (Supervisor)",
-            "26/10/2026"
+            "06/11/2026"
         ),
         (
             "UAT-04",
@@ -317,7 +362,7 @@ def update_uat_workbook():
             5,
             "Pencarian realtime sangat responsif dan akurat.",
             "Budi Santoso (Staff Gudang)",
-            "26/10/2026"
+            "06/11/2026"
         ),
         (
             "UAT-05",
@@ -330,7 +375,7 @@ def update_uat_workbook():
             5,
             "Fitur auto-generate kode box dan live preview volume liter sangat praktis.",
             "Hendra Wijaya (Supervisor)",
-            "26/10/2026"
+            "06/11/2026"
         ),
         (
             "UAT-06",
@@ -343,7 +388,7 @@ def update_uat_workbook():
             5,
             "Scanner responsif dan ada tombol lampu senter (torch) yang berguna saat lorong rak gelap.",
             "Agus Pratama (Operator)",
-            "26/10/2026"
+            "06/11/2026"
         ),
         (
             "UAT-07",
@@ -356,7 +401,7 @@ def update_uat_workbook():
             5,
             "Tombol quick add (+5, +10) sangat mempermudah input barang dalam jumlah banyak.",
             "Budi Santoso (Staff Gudang)",
-            "26/10/2026"
+            "06/11/2026"
         ),
         (
             "UAT-08",
@@ -369,29 +414,64 @@ def update_uat_workbook():
             5,
             "Validasi ini sangat penting untuk menjaga integritas data gudang fisik.",
             "Budi Santoso (Staff Gudang)",
-            "26/10/2026"
+            "06/11/2026"
         ),
         (
             "UAT-09",
-            "Petugas Gudang",
-            "Sebagai pengguna aplikasi mobile, saya ingin tampilan aplikasi nyaman dipandang, responsif, dan tidak mengalami force close saat digunakan.",
-            "Mengoperasikan aplikasi selama 15 menit, berpindah layar, mencoba scanner, dan melakukan transaksi berulang.",
-            "Tidak ada tampilan terpotong/overflow, kontras teks nyaman, tombol mudah disentuh, dan aplikasi berjalan stabil.",
-            "Rendah",
+            "Supervisor Inventaris",
+            "Sebagai supervisor inventaris, saya ingin menghapus box yang sudah rusak atau tidak diproduksi lagi disertai konfirmasi keamanan.",
+            "Mengetuk ikon tempat sampah pada kartu box, memeriksa rincian box pada dialog peringatan, lalu menekan 'Hapus Box'.",
+            "Box terhapus permanen dari Supabase beserta seluruh riwayat transaksi (cascade), muncul notifikasi sukses, dan daftar katalog ter-update realtime.",
+            "Tinggi",
             "PASS",
             5,
-            "Antarmuka modern, navigasi lancar, tidak ada lag atau crash sama sekali.",
+            "Fitur hapus box sangat aman karena ada konfirmasi pencegah klik tidak sengaja dan otomatis membersihkan transaksi terkait.",
+            "Hendra Wijaya (Supervisor)",
+            "06/11/2026"
+        ),
+        (
+            "UAT-10",
+            "Petugas Gudang",
+            "Sebagai petugas gudang, saya ingin dapat membatalkan proses penghapusan box jika saya salah memilih item agar data tidak hilang.",
+            "Mengetuk ikon hapus pada box, lalu memilih tombol 'Batal' pada dialog konfirmasi kaca.",
+            "Dialog tertutup seketika dan data box tetap utuh berada di katalog tanpa perubahan apa pun.",
+            "Sedang",
+            "PASS",
+            5,
+            "Tombol Batal berfungsi normal dan memastikan data box tetap aman di katalog.",
+            "Budi Santoso (Staff Gudang)",
+            "06/11/2026"
+        ),
+        (
+            "UAT-11",
+            "Petugas Gudang",
+            "Sebagai pengguna aplikasi mobile, saya ingin tampilan antarmuka modern dengan efek kaca (Glassmorphism), teks mudah dibaca, dan logo baru MyWarehouse yang rapi.",
+            "Mengoperasikan aplikasi di berbagai layar (katalog, modal, form input, dialog) dan mengamati kenyamanan visual serta responsivitasnya.",
+            "Efek kaca buram (frosted glass) terlihat elegan, kontras teks tetap tajam dan jelas dibaca, logo baru proporsional, serta navigasi mulus tanpa lag.",
+            "Sedang",
+            "PASS",
+            5,
+            "Desain efek kaca sangat modern, elegan, tidak silau, dan logo baru warehouse sangat profesional.",
             "Agus Pratama (Operator)",
-            "26/10/2026"
+            "06/11/2026"
         ),
     ]
 
+    ref_row_uat = 5
     for i, row_data in enumerate(uat_scenarios, start=5):
         for col_idx, val in enumerate(row_data, start=1):
-            ws_uat.cell(row=i, column=col_idx, value=val)
+            cell = ws_uat.cell(row=i, column=col_idx, value=val)
+            ref_cell = ws_uat.cell(row=ref_row_uat, column=col_idx)
+            cell.font = copy(ref_cell.font)
+            cell.border = copy(ref_cell.border)
+            cell.fill = copy(ref_cell.fill)
+            cell.alignment = copy(ref_cell.alignment)
+
+    max_uat_row = 4 + len(uat_scenarios)
+    print(f"Updated Sheet 'UAT': {len(uat_scenarios)} UAT scenarios (rows 5 to {max_uat_row})")
 
     # ==========================================
-    # 4. SHEET: Bug Report (A5:L13)
+    # 4. SHEET: Bug Report
     # ==========================================
     ws_bug = wb['Bug Report']
     ws_bug['A5'] = "BUG-001"
@@ -408,19 +488,33 @@ def update_uat_workbook():
     ws_bug['L5'] = "QA Tester"
 
     # ==========================================
-    # 5. SHEET: Rekap & Sign-off
+    # 5. SHEET: Rekap & Sign-off (Dynamic Range Formulas)
     # ==========================================
     ws_rekap = wb['Rekap & Sign-off']
+    
+    # Formulas dynamically pointing to exact max row of Test Case & UAT
+    ws_rekap['B5'] = f"=COUNTA('Test Case'!A5:A{max_tc_row})"
+    ws_rekap['C5'] = f"=COUNTA('UAT'!A5:A{max_uat_row})"
+    ws_rekap['B6'] = f'=COUNTIF(\'Test Case\'!J5:J{max_tc_row},"PASS")'
+    ws_rekap['C6'] = f'=COUNTIF(\'UAT\'!G5:G{max_uat_row},"PASS")'
+    ws_rekap['B7'] = f'=COUNTIF(\'Test Case\'!J5:J{max_tc_row},"FAIL")'
+    ws_rekap['C7'] = f'=COUNTIF(\'UAT\'!G5:G{max_uat_row},"FAIL")'
+    ws_rekap['B8'] = f'=COUNTIF(\'Test Case\'!J5:J{max_tc_row},"BLOCKED")'
+    ws_rekap['C8'] = f'=COUNTIF(\'UAT\'!G5:G{max_uat_row},"BLOCKED")'
+    ws_rekap['C11'] = f'=IFERROR(AVERAGE(\'UAT\'!H5:H{max_uat_row}),"-")'
+    ws_rekap['B14'] = f'=COUNTIF(\'UAT\'!F5:F{max_uat_row},"Tinggi")-COUNTIFS(\'UAT\'!F5:F{max_uat_row},"Tinggi",\'UAT\'!G5:G{max_uat_row},"PASS")'
+    
+    # Signatures
     ws_rekap['A24'] = "(Budi Santoso - Perwakilan Pengguna)"
-    ws_rekap['B24'] = "(Tim QA / Tester Mobile Testing)"
-    ws_rekap['C24'] = "(Dosen Pengampu / Product Owner)"
-    ws_rekap['A25'] = "Tanggal: 26 Oktober 2026"
-    ws_rekap['B25'] = "Tanggal: 26 Oktober 2026"
-    ws_rekap['C25'] = "Tanggal: 26 Oktober 2026"
+    ws_rekap['B24'] = "(Ismail Fikron - Tim QA / Tester)"
+    ws_rekap['C24'] = "(Triyono M.Kom - Dosen Pengampu)"
+    ws_rekap['A25'] = "Tanggal: 06 November 2026"
+    ws_rekap['B25'] = "Tanggal: 06 November 2026"
+    ws_rekap['C25'] = "Tanggal: 06 November 2026"
 
     # Save workbook
     wb.save(filename)
-    print(f"Successfully updated {filename}!")
+    print(f"Successfully saved and updated: {filename}")
 
 if __name__ == '__main__':
     update_uat_workbook()
