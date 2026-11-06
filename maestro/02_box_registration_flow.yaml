@@ -94,6 +94,7 @@ appId: com.warehouse.box_management_system
 - assertVisible: "UUID Box copied to clipboard!"
 
 # Tutup Dialog QR Code
+- takeScreenshot: screenshots/02_qr_dialog_success
 - back
 
 # Kembali ke Beranda Katalog Box

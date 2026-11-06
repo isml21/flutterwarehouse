@@ -44,4 +44,5 @@ appId: com.warehouse.box_management_system
 
 # Verifikasi Notifikasi Sukses Penghapusan Muncul
 - assertVisible: ".*berhasil dihapus.*"
+- takeScreenshot: screenshots/06_delete_box_success
 
