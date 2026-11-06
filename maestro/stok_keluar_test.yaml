@@ -1,0 +1,21 @@
+appId: com.warehouse.box_management_system # Sesuaikan dengan App ID (di build.gradle.kts: com.warehouse.box_management_system)
+---
+- launchApp
+
+# 1. Menekan Tombol Stock In / Out pada salah satu kartu box di katalog
+- tapOn: "Stock In / Out"
+
+# 2. Memilih Tab 'Stock OUT (Keluar)'
+- tapOn: "Stock OUT (Keluar)"
+
+# 3. Menentukan Jumlah Barang Keluar (Misal menggunakan chip +5)
+- tapOn: "+5"
+
+# 4. Menekan Tombol Konfirmasi Stock OUT
+- tapOn: ".*Konfirmasi Stock OUT.*"
+
+# 5. Memverifikasi Notifikasi Sukses
+- assertVisible: ".*Berhasil mencatat Stock Out.*"
+
+# 6. Menutup BottomSheet Transaksi
+- back

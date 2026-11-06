@@ -1,0 +1,64 @@
+appId: com.warehouse.box_management_system
+---
+# ==============================================================================
+# TEST SCENARIO: TS-03 TRANSAKSI STOK (STOCK IN / STOCK OUT)
+# UAT Reference: TC-TRX-03, TC-TRX-04, TC-TRX-05
+# ==============================================================================
+
+# 1. Pastikan Petugas Sudah Login
+- runFlow: subflows/login.yaml
+
+- assertVisible: "Katalog Box Gudang"
+
+# 2. Buka BottomSheet Transaksi dari Kartu Box
+- tapOn: "Stock In / Out"
+- assertVisible: "Stock IN (Masuk)"
+- assertVisible: "Stock OUT (Keluar)"
+- assertVisible: "Jumlah Barang"
+
+# ------------------------------------------------------------------------------
+# TC-TRX-03: Transaksi Stock IN (+10 Unit)
+# ------------------------------------------------------------------------------
+- tapOn: "Stock IN (Masuk)"
+
+# Tambahkan +10 unit menggunakan Quick Chip
+- tapOn: "+10"
+
+# Konfirmasi Stock IN
+- tapOn: ".*Konfirmasi Stock IN.*"
+- assertVisible: ".*Berhasil mencatat Stock In.*"
+
+# ------------------------------------------------------------------------------
+# TC-TRX-05: Validasi Stock OUT Melebihi Stok (Over-withdrawal Boundary Test)
+# ------------------------------------------------------------------------------
+- tapOn: "Stock OUT (Keluar)"
+
+# Masukkan kuantitas keluar yang sangat besar melebihi stok yang ada
+- tapOn:
+    below: "Jumlah Barang"
+- eraseText
+- inputText: "9999"
+
+# Verifikasi Banner Peringatan Merah Muncul
+- assertVisible: ".*melebihi stok yang ada.*"
+
+# ------------------------------------------------------------------------------
+# TC-TRX-04: Transaksi Stock OUT Valid (-2 Unit)
+# ------------------------------------------------------------------------------
+# Masukkan kuantitas keluar yang valid
+- tapOn:
+    below: "Jumlah Barang"
+- eraseText
+- inputText: "2"
+
+# Pastikan Peringatan Hilang dan Konfirmasi Stock OUT
+- tapOn: ".*Konfirmasi Stock OUT.*"
+- assertVisible: ".*Berhasil mencatat Stock Out.*"
+
+# Verifikasi Riwayat Transaksi Tercatat
+- scroll
+- assertVisible: "Riwayat Transaksi Box Ini"
+
+# Tutup BottomSheet Transaksi
+- back
+- assertVisible: "Katalog Box Gudang"

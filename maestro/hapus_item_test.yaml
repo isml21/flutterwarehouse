@@ -1,0 +1,27 @@
+appId: com.warehouse.box_management_system # Sesuaikan dengan App ID di build.gradle.kts
+---
+- launchApp
+
+# 1. Menekan Tombol Hapus pada salah satu kartu box di katalog
+- tapOn:
+    id: "btn_delete_.*"
+
+# 2. Memastikan Dialog Konfirmasi Hapus Glassmorphic muncul
+- assertVisible: "Hapus Box dari Sistem?"
+- assertVisible: "Tindakan ini permanen.*"
+
+# 3. Uji coba tombol Batal terlebih dahulu
+- tapOn: "Batal"
+- assertNotVisible: "Hapus Box dari Sistem?"
+
+# 4. Membuka dialog hapus kembali untuk konfirmasi penghapusan
+- tapOn:
+    id: "btn_delete_.*"
+- assertVisible: "Hapus Box dari Sistem?"
+
+# 5. Menekan tombol konfirmasi 'Hapus Box'
+- tapOn: "Hapus Box"
+
+# 6. Memverifikasi Notifikasi Sukses Penghapusan
+- assertVisible: ".*berhasil dihapus.*"
+
