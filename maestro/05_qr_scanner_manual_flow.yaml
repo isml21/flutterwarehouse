@@ -1,0 +1,53 @@
+appId: com.warehouse.box_management_system
+---
+# ==============================================================================
+# TEST SCENARIO: TS-03 SCANNER QR & PENCARIAN MANUAL (EMULATOR/OFFLINE)
+# UAT Reference: TC-TRX-01, TC-TRX-02
+# ==============================================================================
+
+# 1. Pastikan Petugas Sudah Login
+- runFlow: subflows/login.yaml
+
+- assertVisible: "Katalog Box Gudang"
+
+# 2. Buka Menu Scanner QR
+- tapOn: "Scan QR Box"
+- assertVisible: "Scanner QR Box Gudang"
+
+# ------------------------------------------------------------------------------
+# TC-TRX-02: Input Manual Kode Box / UUID (Fallback Scanner)
+# ------------------------------------------------------------------------------
+- runFlow:
+    when:
+      visible: "Tidak bisa scan? Ketik Kode/UUID Manual"
+    commands:
+      - tapOn: "Tidak bisa scan? Ketik Kode/UUID Manual"
+
+- runFlow:
+    when:
+      visible: "Gunakan Input Manual"
+    commands:
+      - tapOn: "Gunakan Input Manual"
+
+- assertVisible: "Input Kode / UUID Manual"
+
+# Masukkan Kode Box
+- tapOn:
+    hintText: "Contoh: BOX-STD-001 atau UUID"
+- inputText: "BOX-STD-001"
+
+# Tekan Tombol Cari Box
+- tapOn: "Cari Box"
+
+# Verifikasi BottomSheet Detail Box Terbuka
+- runFlow:
+    when:
+      visible: "Pilih Aksi Transaksi"
+    commands:
+      - assertVisible: "Stock IN (Masuk)"
+      - assertVisible: "Stock OUT (Keluar)"
+      - back
+
+# Kembali ke Katalog
+- back
+- assertVisible: "Katalog Box Gudang"
