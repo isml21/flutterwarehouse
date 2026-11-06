@@ -119,11 +119,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       letterSpacing: -0.5,
                     ),
                   ),
-                  const SizedBox(height: 6),
+                  const SizedBox(height: 2),
+                  const Text(
+                    'Sistem Manajemen Box Gudang',
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.accent,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
                   const Text(
                     'Warehouse Inventory & QR Tracking System',
                     style: TextStyle(
-                      fontSize: 13,
+                      fontSize: 12,
                       color: AppColors.textSecondary,
                       fontWeight: FontWeight.w500,
                     ),

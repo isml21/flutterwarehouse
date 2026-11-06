@@ -49,5 +49,6 @@ appId: com.warehouse.box_management_system
       - back
 
 # Kembali ke Katalog
+- takeScreenshot: screenshots/05_qr_scanner_success
 - back
 - assertVisible: "Katalog Box Gudang"

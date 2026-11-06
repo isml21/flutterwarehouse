@@ -61,3 +61,4 @@ appId: com.warehouse.box_management_system
 - assertVisible: "Katalog Box Gudang"
 - assertVisible: "Total Jenis"
 - assertVisible: "Total Unit"
+- takeScreenshot: screenshots/01_auth_success

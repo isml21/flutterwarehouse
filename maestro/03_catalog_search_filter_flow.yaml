@@ -48,5 +48,6 @@ appId: com.warehouse.box_management_system
 - assertVisible: ".*UUID:.*"
 
 # Tutup Dialog
+- takeScreenshot: screenshots/03_search_filter_success
 - back
 - assertVisible: "Katalog Box Gudang"

@@ -60,5 +60,6 @@ appId: com.warehouse.box_management_system
 - assertVisible: "Riwayat Transaksi Box Ini"
 
 # Tutup BottomSheet Transaksi
+- takeScreenshot: screenshots/04_stock_transaction_success
 - back
 - assertVisible: "Katalog Box Gudang"
