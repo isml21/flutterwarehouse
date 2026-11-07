@@ -31,3 +31,4 @@ appId: com.warehouse.box_management_system
 
 # 6. Uji Fitur Hapus Box & Validasi Pembatalan Hapus (TC-DEL-01, TC-DEL-02)
 - runFlow: 06_delete_box_flow.yaml
+
