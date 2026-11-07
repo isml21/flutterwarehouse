@@ -1,81 +1,45 @@
 # Panduan Pengujian Mobile Testing dengan Maestro CLI
 
-Direktori ini berisi berkas konfigurasi **Maestro Test Suite (YAML)** untuk menguji seluruh fitur pada aplikasi **Box Management System (Warehouse & QR Tracking System)** (`com.warehouse.box_management_system`).
+Direktori ini berisi berkas konfigurasi **Maestro Test Suite (YAML)** yang telah diringkas secara optimal menjadi **4 Berkas Pengujian Utama** untuk menguji seluruh fitur pada aplikasi **MyWarehouse** (`com.warehouse.box_management_system`).
 
 ---
 
-## 📁 Struktur Berkas Pengujian
+## 📁 4 Berkas Pengujian Utama
 
 | Berkas YAML | Deskripsi Skenario & Test Case |
 |---|---|
-| [`01_auth_flow.yaml`](file:///c:/xampp/FLUTTER/TUGAS%20MOBILETESTING/maestro/01_auth_flow.yaml) | **TS-01 Autentikasi**: Validasi field kosong, format email salah, password < 6 karakter, tombol demo cepat, dan login sukses (TC-AUTH-01 s/d TC-AUTH-05). |
-| [`02_box_registration_flow.yaml`](file:///c:/xampp/FLUTTER/TUGAS%20MOBILETESTING/maestro/02_box_registration_flow.yaml) | **TS-02 Registrasi Box**: Validasi dimensi `0` (Boundary), auto-generate kode acak, input box baru, hitung volume otomatis, dan dialog QR Code (TC-BOX-01, TC-BOX-02, TC-BOX-05). |
-| [`03_catalog_search_filter_flow.yaml`](file:///c:/xampp/FLUTTER/TUGAS%20MOBILETESTING/maestro/03_catalog_search_filter_flow.yaml) | **TS-02 Pencarian & Filter**: Pencarian realtime search bar, filter chip status stok (*In Stock*, *Low Stock*, *Out of Stock*, *Semua*), dan dialog QR Code (TC-BOX-03 s/d TC-BOX-05). |
-| [`04_stock_transaction_flow.yaml`](file:///c:/xampp/FLUTTER/TUGAS%20MOBILETESTING/maestro/04_stock_transaction_flow.yaml) | **TS-03 Transaksi Stok**: Stock IN (+10 unit), validasi over-withdrawal stok minus, dan Stock OUT valid (TC-TRX-03 s/d TC-TRX-05). |
-| [`05_qr_scanner_manual_flow.yaml`](file:///c:/xampp/FLUTTER/TUGAS%20MOBILETESTING/maestro/05_qr_scanner_manual_flow.yaml) | **TS-03 Scanner QR & Fallback**: Membuka scanner, fallback pencarian input manual kode box/UUID jika pada emulator kamera tidak aktif (TC-TRX-01, TC-TRX-02). |
-| [`06_delete_box_flow.yaml`](file:///c:/xampp/FLUTTER/TUGAS%20MOBILETESTING/maestro/06_delete_box_flow.yaml) | **TS-06 Hapus Item / Box**: Membuka dialog konfirmasi glassmorphic, uji pembatalan, dan konfirmasi penghapusan item box (TC-DEL-01, TC-DEL-02). |
-| [`run_all.yaml`](file:///c:/xampp/FLUTTER/TUGAS%20MOBILETESTING/maestro/run_all.yaml) | **Master Test Suite**: Menjalankan seluruh pengujian di atas secara sekuensial end-to-end. |
-| [`subflows/login.yaml`](file:///c:/xampp/FLUTTER/TUGAS%20MOBILETESTING/maestro/subflows/login.yaml) | *Helper subflow* untuk login otomatis sebelum menjalankan skenario individual. |
+| [`01_auth_test.yaml`](file:///c:/xampp/FLUTTER/TUGAS%20MOBILETESTING/maestro/01_auth_test.yaml) | **Modul Autentikasi**: Validasi field kosong, format email salah, password < 6 karakter, fitur demo login cepat, dan keberhasilan masuk ke katalog (TC-AUTH-01 s/d TC-AUTH-05). |
+| [`02_katalog_tambah_box_test.yaml`](file:///c:/xampp/FLUTTER/TUGAS%20MOBILETESTING/maestro/02_katalog_tambah_box_test.yaml) | **Modul Katalog & Registrasi**: Auto-generate kode acak, input nama/dimensi box, live kalkulasi volume (24.00 L), terbit popup QR Code, serta pengujian search bar dan filter status stok (TC-BOX-01 s/d TC-BOX-05). |
+| [`03_transaksi_stok_qr_test.yaml`](file:///c:/xampp/FLUTTER/TUGAS%20MOBILETESTING/maestro/03_transaksi_stok_qr_test.yaml) | **Modul Transaksi & Scanner**: Transaksi Stock IN (+10 unit), validasi batas penarikan berlebih (*over-withdrawal boundary test*), Stock OUT (-2 unit), dan pembukaan scanner QR code serta pencarian kode manual (TC-TRX-01 s/d TC-TRX-05). |
+| [`04_hapus_box_test.yaml`](file:///c:/xampp/FLUTTER/TUGAS%20MOBILETESTING/maestro/04_hapus_box_test.yaml) | **Modul Hapus Box & Keamanan**: Uji pembatalan hapus dialog (*Negative Flow / human error prevention*), modal konfirmasi glassmorphic, dan eksekusi hapus box permanen dari Supabase (*Positive Flow*) (UAT-09, UAT-10, TC-BOX-06, TC-BOX-07). |
+| [`run_all.yaml`](file:///c:/xampp/FLUTTER/TUGAS%20MOBILETESTING/maestro/run_all.yaml) | **Master Test Suite**: Menjalankan ke-4 pengujian di atas secara berurutan (*Full End-to-End*). |
 
 ---
 
 ## 🚀 Cara Menjalankan Maestro
 
-### 1. Prasyarat Instalasi
-Pastikan perangkat Android (fisik atau Emulator) sudah terhubung dan terdeteksi melalui ADB:
+### 1. Menjalankan Uji Per-Fitur (Pilih Salah Satu dari 4 Berkas)
 ```bash
-adb devices
+# 1. Uji Autentikasi & Form Login
+maestro test maestro/01_auth_test.yaml
+
+# 2. Uji Registrasi Box, Volume & Filter Katalog
+maestro test maestro/02_katalog_tambah_box_test.yaml
+
+# 3. Uji Transaksi Stok In/Out & Scanner QR
+maestro test maestro/03_transaksi_stok_qr_test.yaml
+
+# 4. Uji Hapus Item / Box & Keamanan Dialog
+maestro test maestro/04_hapus_box_test.yaml
 ```
 
-Jika Maestro belum terpasang di sistem Windows, pasang melalui PowerShell:
-```powershell
-# Menggunakan PowerShell (Official installer via curl/scoop/npm)
-curl -fsSL "https://get.maestro.mobile.dev" | powershell
-```
-Atau jika menggunakan Node.js:
-```bash
-npm install -g maestro-cli
-```
-
-### 2. Build & Install Aplikasi ke Emulator / Device
-Sebelum pengujian dijalankan, pastikan aplikasi sudah ter-install di emulator:
-```bash
-flutter run
-# atau
-flutter build apk --debug
-adb install build/app/outputs/flutter-apk/app-debug.apk
-```
-
-### 3. Menjalankan Uji Otomatis
-
-#### A. Menjalankan Seluruh Suite Pengujian (End-to-End)
+### 2. Menjalankan SEMUA Pengujian Sekaligus
 ```bash
 maestro test maestro/run_all.yaml
 ```
 
-#### B. Menjalankan Alur Spesifik Saja
-```bash
-# Uji Autentikasi & Validasi Form
-maestro test maestro/01_auth_flow.yaml
-
-# Uji Registrasi Box Baru & QR Code
-maestro test maestro/02_box_registration_flow.yaml
-
-# Uji Pencarian & Filter Katalog
-maestro test maestro/03_catalog_search_filter_flow.yaml
-
-# Uji Transaksi Stok IN & OUT
-maestro test maestro/04_stock_transaction_flow.yaml
-
-# Uji Scanner & Input Manual
-maestro test maestro/05_qr_scanner_manual_flow.yaml
-
-# Uji Hapus Item / Box
-maestro test maestro/06_delete_box_flow.yaml
-```
-
-#### C. Mode Interaktif (Maestro Studio)
-Untuk melihat hierarki UI dan elemen aplikasi secara visual di browser saat menulis atau memvalidasi test:
+### 3. Menggunakan Maestro Studio (Web GUI)
 ```bash
 maestro studio
 ```
+Buka browser di **`http://localhost:9999`**.

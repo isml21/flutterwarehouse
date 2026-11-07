@@ -132,14 +132,14 @@ flutter build apk --debug
 Pastikan emulator Android aktif dan terdeteksi di ADB (`adb devices`):
 
 ```bash
-# Menjalankan seluruh test suite sekaligus
+# Menjalankan seluruh test suite sekaligus (Full End-to-End)
 maestro test maestro/run_all.yaml
 
-# Menjalankan skenario spesifik
-maestro test maestro/01_auth_flow.yaml
-maestro test maestro/02_box_registration_flow.yaml
-maestro test maestro/04_stock_transaction_flow.yaml
-maestro test maestro/06_delete_box_flow.yaml
+# Menjalankan 4 skenario inti:
+maestro test maestro/01_auth_test.yaml
+maestro test maestro/02_katalog_tambah_box_test.yaml
+maestro test maestro/03_transaksi_stok_qr_test.yaml
+maestro test maestro/04_hapus_box_test.yaml
 
 ```
 

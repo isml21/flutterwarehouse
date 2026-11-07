@@ -1,0 +1,88 @@
+appId: com.warehouse.box_management_system
+---
+# ==============================================================================
+# PENGUJIAN 3: TRANSAKSI STOK IN/OUT & SCANNER QR CODE
+# (TC-TRX-01 s/d TC-TRX-05)
+# ==============================================================================
+
+# 1. Pastikan Aplikasi Berjalan & Terotentikasi
+- launchApp:
+    clearState: false
+
+- runFlow:
+    when:
+      visible: "Masuk Sekarang"
+    commands:
+      - tapOn: "Isi Akun Demo Cepat"
+      - tapOn: "Masuk Sekarang"
+
+- assertVisible: "Katalog Box Gudang"
+
+# ------------------------------------------------------------------------------
+# A. Transaksi Stok IN & OUT pada Kartu Box
+# ------------------------------------------------------------------------------
+# Buka BottomSheet Transaksi dari Kartu Box Pertama
+- tapOn: "Stock In / Out"
+- assertVisible: "Stock IN (Masuk)"
+- assertVisible: "Stock OUT (Keluar)"
+- assertVisible: "Jumlah Barang"
+
+# 1. Transaksi Stock IN (+10 Unit)
+- tapOn: "Stock IN (Masuk)"
+- tapOn: "+10"
+- tapOn: ".*Konfirmasi Stock IN.*"
+- assertVisible: ".*Berhasil mencatat Stock In.*"
+
+# 2. Validasi Batas Penarikan Berlebih / Over-withdrawal (Negative Boundary Test)
+- tapOn: "Stock OUT (Keluar)"
+- tapOn:
+    below: "Jumlah Barang"
+- eraseText
+- inputText: "9999"
+- assertVisible: ".*melebihi stok yang ada.*"
+
+# 3. Transaksi Stock OUT Valid (-2 Unit)
+- tapOn:
+    below: "Jumlah Barang"
+- eraseText
+- inputText: "2"
+- tapOn: ".*Konfirmasi Stock OUT.*"
+- assertVisible: ".*Berhasil mencatat Stock Out.*"
+
+# Tutup BottomSheet Transaksi
+- takeScreenshot: screenshots/03_stock_transaction_success
+- back
+- assertVisible: "Katalog Box Gudang"
+
+# ------------------------------------------------------------------------------
+# B. Scanner QR Code & Pencarian Manual (Fallback)
+# ------------------------------------------------------------------------------
+# Buka Halaman Scanner
+- tapOn: "Scan QR Box"
+- assertVisible: "Scanner QR Box Gudang"
+
+# Gunakan Input Manual (Cocok untuk Emulator / Uji Otomatis)
+- runFlow:
+    when:
+      visible: "Tidak bisa scan? Ketik Kode/UUID Manual"
+    commands:
+      - tapOn: "Tidak bisa scan? Ketik Kode/UUID Manual"
+
+- runFlow:
+    when:
+      visible: "Gunakan Input Manual"
+    commands:
+      - tapOn: "Gunakan Input Manual"
+
+- assertVisible: "Input Kode / UUID Manual"
+
+# Masukkan Kode Box Default
+- tapOn:
+    hintText: "Contoh: BOX-STD-001 atau UUID"
+- inputText: "BOX-STD-001"
+- tapOn: "Cari Box"
+
+# Kembali ke Beranda Katalog
+- takeScreenshot: screenshots/03_qr_scanner_success
+- back
+- assertVisible: "Katalog Box Gudang"

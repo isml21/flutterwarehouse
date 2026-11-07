@@ -1,0 +1,99 @@
+appId: com.warehouse.box_management_system
+---
+# ==============================================================================
+# PENGUJIAN 2: REGISTRASI BOX BARU, KALKULASI VOLUME & PENCARIAN
+# (TC-BOX-01 s/d TC-BOX-05)
+# ==============================================================================
+
+# 1. Pastikan Aplikasi Berjalan & Terotentikasi
+- launchApp:
+    clearState: false
+
+- runFlow:
+    when:
+      visible: "Masuk Sekarang"
+    commands:
+      - tapOn: "Isi Akun Demo Cepat"
+      - tapOn: "Masuk Sekarang"
+
+- assertVisible: "Katalog Box Gudang"
+
+# ------------------------------------------------------------------------------
+# A. Registrasi Box Baru & Kalkulasi Volume Otomatis
+# ------------------------------------------------------------------------------
+# Buka Form Tambah Box
+- tapOn: "Tambah Box Baru"
+- assertVisible: "Registrasi Box Baru"
+- assertVisible: "Identitas Box Gudang"
+
+# Acak Kode Box
+- tapOn: "Acak"
+
+# Isi Nama Box
+- tapOn:
+    hintText: "Misal: Kardus Kemasan Ekspor Medium"
+- inputText: "Box Sparepart Mesin Industri"
+
+# Input Dimensi: Panjang 40, Lebar 30, Tinggi 20 (Volume = 24.00 Liter)
+- tapOn:
+    below: "Panjang (L)"
+- eraseText
+- inputText: "40"
+
+- tapOn:
+    below: "Lebar (W)"
+- eraseText
+- inputText: "30"
+
+- tapOn:
+    below: "Tinggi (H)"
+- eraseText
+- inputText: "20"
+
+# Verifikasi Live Volume Preview
+- assertVisible: ".*24.00 Liter.*"
+
+# Scroll ke Bagian Lokasi & Stok
+- hideKeyboard
+- scrollUntilVisible:
+    element: "Simpan Box & Generate QR Code"
+    direction: DOWN
+
+# Input Lokasi Rak
+- tapOn:
+    hintText: "Misal: Rak A-02, Pallet 4, Bay 10"
+- eraseText
+- inputText: "Rak B-04"
+
+# Simpan Box Baru
+- hideKeyboard
+- tapOn: "Simpan Box & Generate QR Code"
+
+# Verifikasi Modal QR Code Berhasil Terbit
+- assertVisible: "Warehouse QR Identifier"
+- assertVisible: "Box Sparepart Mesin Industri"
+- takeScreenshot: screenshots/02_qr_dialog_success
+
+# Tutup Dialog QR Code
+- back
+- assertVisible: "Katalog Box Gudang"
+
+# ------------------------------------------------------------------------------
+# B. Pencarian & Filter Status Stok Katalog
+# ------------------------------------------------------------------------------
+# Cari Box Berdasarkan Lokasi Rak
+- tapOn:
+    hintText: "Cari Box Code, Nama, atau Lokasi..."
+- inputText: "Rak B-04"
+- assertVisible: "Rak B-04"
+
+# Bersihkan Pencarian
+- tapOn:
+    hintText: "Cari Box Code, Nama, atau Lokasi..."
+- eraseText
+
+# Uji Filter Status Stok
+- tapOn: "In Stock"
+- tapOn: ".*Low Stock.*"
+- tapOn: ".*Semua.*"
+- takeScreenshot: screenshots/02_katalog_tambah_box_success

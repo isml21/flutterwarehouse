@@ -1,27 +1,28 @@
 appId: com.warehouse.box_management_system
 ---
 # ==============================================================================
-# TEST SCENARIO: TS-01 AUTENTIKASI (LOGIN & VALIDASI FORM)
-# UAT Reference: TC-AUTH-01 s/d TC-AUTH-05
+# PENGUJIAN 1: AUTENTIKASI & FORM LOGIN (TC-AUTH-01 s/d TC-AUTH-05)
+# Menjalankan validasi input, boundary test, dan autentikasi Supabase
 # ==============================================================================
 
+# 1. Bersihkan status dan buka aplikasi
 - launchApp:
     clearState: true
 
-# 1. Pastikan Halaman Login Terbuka
+# 2. Pastikan Layar Login Terbuka
 - assertVisible: "Sistem Manajemen Box"
 - assertVisible: "Warehouse Inventory & QR Tracking System"
 - assertVisible: "Masuk ke Sistem"
 
 # ------------------------------------------------------------------------------
-# TC-AUTH-02: Validasi Field Kosong (Negative Test)
+# A. Validasi Field Kosong (Negative Test)
 # ------------------------------------------------------------------------------
 - tapOn: "Masuk Sekarang"
 - assertVisible: "Email wajib diisi"
 - assertVisible: "Kata sandi wajib diisi"
 
 # ------------------------------------------------------------------------------
-# TC-AUTH-03: Validasi Format Email Tidak Valid (Negative Test)
+# B. Validasi Format Email Tidak Valid (Negative Test)
 # ------------------------------------------------------------------------------
 - tapOn:
     hintText: "nama@perusahaan.com"
@@ -33,7 +34,7 @@ appId: com.warehouse.box_management_system
 - assertVisible: "Format email tidak valid"
 
 # ------------------------------------------------------------------------------
-# TC-AUTH-04: Validasi Password < 6 Karakter (Boundary Test)
+# C. Validasi Password Kurang dari 6 Karakter (Boundary Test)
 # ------------------------------------------------------------------------------
 - tapOn:
     hintText: "nama@perusahaan.com"
@@ -47,17 +48,13 @@ appId: com.warehouse.box_management_system
 - assertVisible: "Kata sandi minimal 6 karakter"
 
 # ------------------------------------------------------------------------------
-# TC-AUTH-05: Fitur Isi Akun Demo Cepat
+# D. Fitur Isi Akun Demo Cepat & Login Berhasil (Positive Test)
 # ------------------------------------------------------------------------------
 - tapOn: "Isi Akun Demo Cepat"
 - assertVisible: "Kredensial Demo terisi otomatis."
-
-# ------------------------------------------------------------------------------
-# TC-AUTH-01: Login Berhasil dengan Kredensial Valid (Positive Test)
-# ------------------------------------------------------------------------------
 - tapOn: "Masuk Sekarang"
 
-# Verifikasi Berhasil Masuk ke Katalog Box Gudang
+# Verifikasi Berhasil Masuk ke Beranda Katalog Box
 - assertVisible: "Katalog Box Gudang"
 - assertVisible: "Total Jenis"
 - assertVisible: "Total Unit"

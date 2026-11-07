@@ -1,20 +1,27 @@
 appId: com.warehouse.box_management_system
 ---
 # ==============================================================================
-# TEST SCENARIO: TS-06 FITUR HAPUS ITEM / BOX DARI SISTEM GUDANG
-# UAT Reference: TC-DEL-01 (Batal Hapus), TC-DEL-02 (Konfirmasi Hapus Box)
+# PENGUJIAN 4: FITUR HAPUS ITEM / BOX & MODAL KEAMANAN
+# (UAT-09, UAT-10, TC-BOX-06, TC-BOX-07)
 # ==============================================================================
 
-# 1. Pastikan Petugas Sudah Login
-- runFlow: subflows/login.yaml
+# 1. Pastikan Aplikasi Berjalan & Terotentikasi
+- launchApp:
+    clearState: false
 
-# 2. Pastikan berada di Katalog Box Gudang
+- runFlow:
+    when:
+      visible: "Masuk Sekarang"
+    commands:
+      - tapOn: "Isi Akun Demo Cepat"
+      - tapOn: "Masuk Sekarang"
+
 - assertVisible: "Katalog Box Gudang"
 
 # ------------------------------------------------------------------------------
-# TC-DEL-01: Pembatalan Hapus Box (Negative / Abort Flow)
+# A. Pembatalan Hapus Box / Batal Hapus (Negative Flow / Human Error Prevention)
 # ------------------------------------------------------------------------------
-# Ketuk tombol hapus pada kartu item box pertama
+# Ketuk ikon tong sampah pada kartu box pertama
 - tapOn:
     text: "Hapus Item / Box"
     index: 0
@@ -26,27 +33,29 @@ appId: com.warehouse.box_management_system
 # Ketuk Tombol 'Batal'
 - tapOn: "Batal"
 
-# Verifikasi Dialog Tertutup dan Data Tetap Ada di Katalog
+# Verifikasi Dialog Tertutup dan Box Tetap Utuh di Katalog
 - assertNotVisible: "Hapus Box dari Sistem?"
 - assertVisible: "Katalog Box Gudang"
 
 # ------------------------------------------------------------------------------
-# TC-DEL-02: Konfirmasi Hapus Box dari Katalog (Positive / Confirmation Flow)
+# B. Konfirmasi Hapus Box Secara Permanen (Positive Flow / Database Cascade)
 # ------------------------------------------------------------------------------
-# Ketuk tombol hapus kembali
+# Ketuk kembali ikon tong sampah pada kartu box pertama
 - tapOn:
     text: "Hapus Item / Box"
     index: 0
 
-# Verifikasi Dialog Muncul
+# Verifikasi Dialog Muncul Kembali
 - assertVisible: "Hapus Box dari Sistem?"
 
-# Ketuk Tombol 'Hapus Box' di bawah teks peringatan
+# Ketuk Tombol 'Hapus Box' di Bawah Teks Peringatan
 - tapOn:
     text: "Hapus Box"
     below: ".*permanen.*"
 
-# Verifikasi Dialog Tertutup dan Notifikasi / Katalog Muncul
+# Verifikasi Dialog Tertutup dan Pengguna Berada di Katalog
 - assertNotVisible: "Hapus Box dari Sistem?"
 - assertVisible: "Katalog Box Gudang"
-- takeScreenshot: screenshots/06_delete_box_success
+
+# Ambil Bukti Screenshot Pengujian
+- takeScreenshot: screenshots/04_hapus_box_success
