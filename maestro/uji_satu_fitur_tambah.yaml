@@ -2,59 +2,80 @@ appId: com.warehouse.box_management_system
 ---
 # ==============================================================================
 # PENGUJIAN 1 FITUR: REGISTRASI & TAMBAH BOX GUDANG BARU (UAT-04)
-# Dapat dijalankan langsung via Maestro Studio atau CLI:
+# Cocok dijalankan langsung di Maestro Studio maupun CLI:
 # maestro test maestro/uji_satu_fitur_tambah.yaml
 # ==============================================================================
 
-# 1. Pastikan aplikasi berjalan dan login jika perlu
+# 1. Buka Aplikasi
 - launchApp:
     clearState: false
 
+# 2. Otomatis Login Jika Berada di Layar Masuk
 - runFlow:
     when:
-      visible: "Masuk Akun"
+      visible: "Masuk Sekarang"
     commands:
-      - tapOn: "Email Petugas"
-      - inputText: "gudang@udb.ac.id"
-      - tapOn: "Kata Sandi"
-      - inputText: "Gudang123!"
-      - tapOn: "Masuk ke Sistem"
+      - tapOn: "Isi Akun Demo Cepat"
+      - tapOn: "Masuk Sekarang"
 
-# 2. Ketuk Tombol Tambah Box di Pojok Kanan Bawah
+# 3. Pastikan Berada di Layar Katalog Box Gudang
+- assertVisible: "Katalog Box Gudang"
+
+# 4. Ketuk Tombol 'Tambah Box Baru' di Pojok Kanan Bawah
 - tapOn: "Tambah Box Baru"
 
-# 3. Verifikasi Form Registrasi Box Terbuka
-- assertVisible: "Form Registrasi Box"
+# 5. Verifikasi Layar Form Registrasi Box Terbuka
+- assertVisible: "Registrasi Box Baru"
+- assertVisible: "Identitas Box Gudang"
 
-# 4. Input Data Spesifikasi Box
-- tapOn: "Nama / Deskripsi Box"
-- inputText: "Box Sparepart Mesin A1"
+# 6. Tekan Tombol 'Acak' untuk Mengenerate Kode Box Otomatis
+- tapOn: "Acak"
 
-- tapOn: "Kategori Barang"
-- inputText: "Sparepart"
+# 7. Isi Nama / Deskripsi Box
+- tapOn:
+    hintText: "Misal: Kardus Kemasan Ekspor Medium"
+- inputText: "Kardus Sparepart Motor Matic"
 
-- tapOn: "Panjang (cm)"
+# 8. Isi Dimensi Panjang, Lebar, dan Tinggi
+- tapOn:
+    below: "Panjang (L)"
+- eraseText
 - inputText: "40"
 
-- tapOn: "Lebar (cm)"
+- tapOn:
+    below: "Lebar (W)"
+- eraseText
 - inputText: "30"
 
-- tapOn: "Tinggi (cm)"
-- inputText: "25"
+- tapOn:
+    below: "Tinggi (H)"
+- eraseText
+- inputText: "20"
 
-- tapOn: "Stok Awal"
-- inputText: "15"
+# 9. Verifikasi Estimasi Volume Terkalkulasi Otomatis (24.00 Liter)
+- assertVisible: ".*24.00 Liter.*"
 
-# 5. Verifikasi Estimasi Volume Terkalkulasi Otomatis Secara Realtime
-- assertVisible: "Estimasi Volume:.*"
+# 10. Scroll ke Bagian Lokasi & Stok
+- scrollUntilVisible:
+    element: "Simpan Box & Generate QR Code"
+    direction: DOWN
 
-# 6. Simpan Data ke Database Supabase
-- tapOn: "Simpan Box"
+# 11. Isi Lokasi Rak
+- tapOn:
+    hintText: "Misal: Rak A-02, Pallet 4, Bay 10"
+- eraseText
+- inputText: "Rak C-05"
 
-# 7. Verifikasi Berhasil Tersimpan dan Tampil di Katalog
-- assertVisible: ".*berhasil ditambahkan.*"
-- assertVisible: "Box Sparepart Mesin A1"
+# 12. Simpan Data Box Baru
+- tapOn: "Simpan Box & Generate QR Code"
 
-# Ambil bukti screenshot
-- takeScreenshot: screenshots/02_hasil_uji_fitur_tambah
+# 13. Verifikasi Popup QR Code Otomatis Muncul
+- assertVisible: "Warehouse QR Identifier"
+- assertVisible: "Kardus Sparepart Motor Matic"
 
+# 14. Tutup Dialog QR Code untuk Kembali ke Katalog
+- takeScreenshot: screenshots/hasil_uji_fitur_tambah
+- back
+
+# 15. Verifikasi Berhasil Kembali ke Katalog Box Gudang
+- assertVisible: "Katalog Box Gudang"

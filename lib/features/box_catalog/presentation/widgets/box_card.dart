@@ -261,22 +261,27 @@ class BoxCard extends StatelessWidget {
                     const SizedBox(width: 8),
 
                     // Delete Item Action Button
-                    IconButton(
-                      key: ValueKey('btn_delete_${box.boxCode}'),
-                      tooltip: 'Hapus Item / Box',
-                      onPressed: onDelete ?? () => DeleteBoxDialog.show(context, box),
-                      icon: const Icon(Icons.delete_outline_rounded, size: 18),
-                      style: IconButton.styleFrom(
-                        backgroundColor: AppColors.dangerLight.withValues(alpha: 0.75),
-                        foregroundColor: AppColors.danger,
-                        side: BorderSide(
-                          color: AppColors.danger.withValues(alpha: 0.2),
-                          width: 1,
+                    Semantics(
+                      identifier: 'btn_delete_${box.boxCode}',
+                      label: 'Hapus Item / Box',
+                      button: true,
+                      child: IconButton(
+                        key: ValueKey('btn_delete_${box.boxCode}'),
+                        tooltip: 'Hapus Item / Box',
+                        onPressed: onDelete ?? () => DeleteBoxDialog.show(context, box),
+                        icon: const Icon(Icons.delete_outline_rounded, size: 18),
+                        style: IconButton.styleFrom(
+                          backgroundColor: AppColors.dangerLight.withValues(alpha: 0.75),
+                          foregroundColor: AppColors.danger,
+                          side: BorderSide(
+                            color: AppColors.danger.withValues(alpha: 0.2),
+                            width: 1,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          visualDensity: VisualDensity.compact,
                         ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        visualDensity: VisualDensity.compact,
                       ),
                     ),
 

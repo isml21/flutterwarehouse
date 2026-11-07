@@ -1,62 +1,57 @@
 appId: com.warehouse.box_management_system
 ---
 # ==============================================================================
-# PENGUJIAN 1 FITUR: HAPUS ITEM / BOX DARI SISTEM (UAT-09 & UAT-10)
-# Dapat dijalankan langsung via Maestro Studio atau CLI:
+# PENGUJIAN 1 FITUR: HAPUS ITEM / BOX DARI SISTEM GUDANG (UAT-09 & UAT-10)
+# Cocok dijalankan langsung di Maestro Studio maupun CLI:
 # maestro test maestro/uji_satu_fitur_hapus.yaml
 # ==============================================================================
 
-# 1. Pastikan aplikasi berjalan dan login jika perlu
+# 1. Buka Aplikasi
 - launchApp:
     clearState: false
 
+# 2. Otomatis Login Jika Berada di Layar Masuk
 - runFlow:
     when:
-      visible: "Masuk Akun"
+      visible: "Masuk Sekarang"
     commands:
-      - tapOn: "Email Petugas"
-      - inputText: "gudang@udb.ac.id"
-      - tapOn: "Kata Sandi"
-      - inputText: "Gudang123!"
-      - tapOn: "Masuk ke Sistem"
+      - tapOn: "Isi Akun Demo Cepat"
+      - tapOn: "Masuk Sekarang"
 
-# 2. Pastikan berada di Layar Katalog Box Gudang
+# 3. Pastikan Berada di Layar Katalog Box Gudang
 - assertVisible: "Katalog Box Gudang"
 
 # ------------------------------------------------------------------------------
-# SKENARIO A: PEMBATALAN HAPUS (Pencegahan Human Error / Batal Hapus)
+# SKENARIO A: Uji Tombol Batal (Pencegahan Kesalahan Hapus / Negatif)
 # ------------------------------------------------------------------------------
-# Ketuk ikon tong sampah (delete) pada kartu box
-- tapOn:
-    id: "btn_delete_.*"
+# Ketuk ikon tong sampah (Hapus Item / Box) pada kartu box
+- tapOn: "Hapus Item / Box"
 
 # Verifikasi Modal Dialog Konfirmasi Glassmorphic Muncul
 - assertVisible: "Hapus Box dari Sistem?"
-- assertVisible: "Tindakan ini permanen.*"
+- assertVisible: ".*permanen.*"
 
-# Ketuk tombol 'Batal'
+# Ketuk Tombol 'Batal'
 - tapOn: "Batal"
 
-# Verifikasi dialog tertutup dan item box tetap aman di katalog
+# Verifikasi Dialog Tertutup dan Box Tetap Ada di Katalog
 - assertNotVisible: "Hapus Box dari Sistem?"
 - assertVisible: "Katalog Box Gudang"
 
 # ------------------------------------------------------------------------------
-# SKENARIO B: EKSEKUSI HAPUS BOX (Permanen)
+# SKENARIO B: Konfirmasi Hapus Box Secara Permanen (Positif)
 # ------------------------------------------------------------------------------
-# Ketuk kembali ikon hapus
-- tapOn:
-    id: "btn_delete_.*"
+# Ketuk kembali ikon tong sampah
+- tapOn: "Hapus Item / Box"
 
-# Verifikasi dialog muncul kembali
+# Verifikasi Dialog Muncul Kembali
 - assertVisible: "Hapus Box dari Sistem?"
 
-# Ketuk tombol 'Hapus Box' untuk konfirmasi penghapusan permanen
+# Ketuk Tombol 'Hapus Box' untuk Menghapus Data
 - tapOn: "Hapus Box"
 
-# Verifikasi notifikasi Snackbar / Toast keberhasilan muncul
+# Verifikasi Notifikasi Sukses Muncul
 - assertVisible: ".*berhasil dihapus.*"
 
-# Ambil bukti screenshot
-- takeScreenshot: screenshots/06_hasil_uji_fitur_hapus
-
+# Ambil Bukti Screenshot Pengujian
+- takeScreenshot: screenshots/hasil_uji_fitur_hapus
