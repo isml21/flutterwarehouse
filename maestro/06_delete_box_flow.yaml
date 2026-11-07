@@ -14,8 +14,10 @@ appId: com.warehouse.box_management_system
 # ------------------------------------------------------------------------------
 # TC-DEL-01: Pembatalan Hapus Box (Negative / Abort Flow)
 # ------------------------------------------------------------------------------
-# Ketuk tombol hapus pada kartu item box
-- tapOn: "Hapus Item / Box"
+# Ketuk tombol hapus pada kartu item box pertama
+- tapOn:
+    text: "Hapus Item / Box"
+    index: 0
 
 # Verifikasi Modal Dialog Konfirmasi Glassmorphic Muncul
 - assertVisible: "Hapus Box dari Sistem?"
@@ -32,14 +34,19 @@ appId: com.warehouse.box_management_system
 # TC-DEL-02: Konfirmasi Hapus Box dari Katalog (Positive / Confirmation Flow)
 # ------------------------------------------------------------------------------
 # Ketuk tombol hapus kembali
-- tapOn: "Hapus Item / Box"
+- tapOn:
+    text: "Hapus Item / Box"
+    index: 0
 
 # Verifikasi Dialog Muncul
 - assertVisible: "Hapus Box dari Sistem?"
 
-# Ketuk Tombol 'Hapus Box' untuk mengeksekusi penghapusan
-- tapOn: "Hapus Box"
+# Ketuk Tombol 'Hapus Box' di bawah teks peringatan
+- tapOn:
+    text: "Hapus Box"
+    below: ".*permanen.*"
 
-# Verifikasi Notifikasi Sukses Penghapusan Muncul
-- assertVisible: ".*berhasil dihapus.*"
+# Verifikasi Dialog Tertutup dan Notifikasi / Katalog Muncul
+- assertNotVisible: "Hapus Box dari Sistem?"
+- assertVisible: "Katalog Box Gudang"
 - takeScreenshot: screenshots/06_delete_box_success

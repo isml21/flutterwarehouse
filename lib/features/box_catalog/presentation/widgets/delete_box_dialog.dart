@@ -228,23 +228,28 @@ class _DeleteBoxDialogState extends ConsumerState<DeleteBoxDialog> {
                   children: [
                     // Batal Button
                     Expanded(
-                      child: OutlinedButton(
-                        onPressed: _isDeleting
-                            ? null
-                            : () => Navigator.of(context).pop(false),
-                        style: OutlinedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 13),
-                          side: const BorderSide(color: AppColors.border),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                      child: Semantics(
+                        identifier: 'btn_cancel_delete',
+                        button: true,
+                        child: OutlinedButton(
+                          key: const ValueKey('btn_cancel_delete'),
+                          onPressed: _isDeleting
+                              ? null
+                              : () => Navigator.of(context).pop(false),
+                          style: OutlinedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 13),
+                            side: const BorderSide(color: AppColors.border),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
                           ),
-                        ),
-                        child: const Text(
-                          'Batal',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.textSecondary,
+                          child: const Text(
+                            'Batal',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.textSecondary,
+                            ),
                           ),
                         ),
                       ),
@@ -253,34 +258,39 @@ class _DeleteBoxDialogState extends ConsumerState<DeleteBoxDialog> {
 
                     // Hapus Box Button
                     Expanded(
-                      child: ElevatedButton.icon(
-                        onPressed: _isDeleting ? null : _handleDelete,
-                        icon: _isDeleting
-                            ? const SizedBox(
-                                width: 16,
-                                height: 16,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  color: Colors.white,
-                                ),
-                              )
-                            : const Icon(Icons.delete_rounded, size: 18),
-                        label: Text(
-                          _isDeleting ? 'Menghapus...' : 'Hapus Box',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
+                      child: Semantics(
+                        identifier: 'btn_confirm_delete',
+                        button: true,
+                        child: ElevatedButton.icon(
+                          key: const ValueKey('btn_confirm_delete'),
+                          onPressed: _isDeleting ? null : _handleDelete,
+                          icon: _isDeleting
+                              ? const SizedBox(
+                                  width: 16,
+                                  height: 16,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    color: Colors.white,
+                                  ),
+                                )
+                              : const Icon(Icons.delete_rounded, size: 18),
+                          label: Text(
+                            _isDeleting ? 'Menghapus...' : 'Hapus Box',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.danger,
-                          foregroundColor: Colors.white,
-                          elevation: 0,
-                          padding: const EdgeInsets.symmetric(vertical: 13),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.danger,
+                            foregroundColor: Colors.white,
+                            elevation: 0,
+                            padding: const EdgeInsets.symmetric(vertical: 13),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            shadowColor: AppColors.danger.withValues(alpha: 0.35),
                           ),
-                          shadowColor: AppColors.danger.withValues(alpha: 0.35),
                         ),
                       ),
                     ),

@@ -55,7 +55,8 @@ appId: com.warehouse.box_management_system
 # 9. Verifikasi Estimasi Volume Terkalkulasi Otomatis (24.00 Liter)
 - assertVisible: ".*24.00 Liter.*"
 
-# 10. Scroll ke Bagian Lokasi & Stok
+# 10. Tutup Keyboard & Scroll ke Tombol Simpan
+- hideKeyboard
 - scrollUntilVisible:
     element: "Simpan Box & Generate QR Code"
     direction: DOWN
@@ -66,7 +67,8 @@ appId: com.warehouse.box_management_system
 - eraseText
 - inputText: "Rak C-05"
 
-# 12. Simpan Data Box Baru
+# 12. Tutup Keyboard & Simpan Data Box Baru
+- hideKeyboard
 - tapOn: "Simpan Box & Generate QR Code"
 
 # 13. Verifikasi Popup QR Code Otomatis Muncul

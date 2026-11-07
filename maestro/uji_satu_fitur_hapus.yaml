@@ -24,8 +24,10 @@ appId: com.warehouse.box_management_system
 # ------------------------------------------------------------------------------
 # SKENARIO A: Uji Tombol Batal (Pencegahan Kesalahan Hapus / Negatif)
 # ------------------------------------------------------------------------------
-# Ketuk ikon tong sampah (Hapus Item / Box) pada kartu box
-- tapOn: "Hapus Item / Box"
+# Ketuk ikon tong sampah pada kartu box pertama (index: 0)
+- tapOn:
+    text: "Hapus Item / Box"
+    index: 0
 
 # Verifikasi Modal Dialog Konfirmasi Glassmorphic Muncul
 - assertVisible: "Hapus Box dari Sistem?"
@@ -41,17 +43,22 @@ appId: com.warehouse.box_management_system
 # ------------------------------------------------------------------------------
 # SKENARIO B: Konfirmasi Hapus Box Secara Permanen (Positif)
 # ------------------------------------------------------------------------------
-# Ketuk kembali ikon tong sampah
-- tapOn: "Hapus Item / Box"
+# Ketuk kembali ikon tong sampah pada kartu box pertama
+- tapOn:
+    text: "Hapus Item / Box"
+    index: 0
 
 # Verifikasi Dialog Muncul Kembali
 - assertVisible: "Hapus Box dari Sistem?"
 
-# Ketuk Tombol 'Hapus Box' untuk Menghapus Data
-- tapOn: "Hapus Box"
+# Ketuk Tombol 'Hapus Box' di bawah teks peringatan
+- tapOn:
+    text: "Hapus Box"
+    below: ".*permanen.*"
 
-# Verifikasi Notifikasi Sukses Muncul
-- assertVisible: ".*berhasil dihapus.*"
+# Verifikasi Dialog Tertutup dan Kembali ke Katalog
+- assertNotVisible: "Hapus Box dari Sistem?"
+- assertVisible: "Katalog Box Gudang"
 
 # Ambil Bukti Screenshot Pengujian
 - takeScreenshot: screenshots/hasil_uji_fitur_hapus

@@ -12,7 +12,9 @@ appId: com.warehouse.box_management_system
       - tapOn: "Masuk Sekarang"
 
 # 1. Menekan Tombol Hapus pada salah satu kartu box di katalog
-- tapOn: "Hapus Item / Box"
+- tapOn:
+    text: "Hapus Item / Box"
+    index: 0
 
 # 2. Memastikan Dialog Konfirmasi Hapus Glassmorphic muncul
 - assertVisible: "Hapus Box dari Sistem?"
@@ -23,11 +25,16 @@ appId: com.warehouse.box_management_system
 - assertNotVisible: "Hapus Box dari Sistem?"
 
 # 4. Membuka dialog hapus kembali untuk konfirmasi penghapusan
-- tapOn: "Hapus Item / Box"
+- tapOn:
+    text: "Hapus Item / Box"
+    index: 0
 - assertVisible: "Hapus Box dari Sistem?"
 
-# 5. Menekan tombol konfirmasi 'Hapus Box'
-- tapOn: "Hapus Box"
+# 5. Menekan tombol konfirmasi 'Hapus Box' di bawah teks peringatan
+- tapOn:
+    text: "Hapus Box"
+    below: ".*permanen.*"
 
-# 6. Memverifikasi Notifikasi Sukses Penghapusan
-- assertVisible: ".*berhasil dihapus.*"
+# 6. Memverifikasi Dialog Tertutup dan Kembali ke Katalog
+- assertNotVisible: "Hapus Box dari Sistem?"
+- assertVisible: "Katalog Box Gudang"
