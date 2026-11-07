@@ -59,3 +59,4 @@ appId: com.warehouse.box_management_system
 
 # Ambil Bukti Screenshot Pengujian
 - takeScreenshot: screenshots/04_hapus_box_success
+

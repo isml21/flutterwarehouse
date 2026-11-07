@@ -24,11 +24,9 @@ appId: com.warehouse.box_management_system
 # ------------------------------------------------------------------------------
 # B. Validasi Format Email Tidak Valid (Negative Test)
 # ------------------------------------------------------------------------------
-- tapOn:
-    hintText: "nama@perusahaan.com"
+- tapOn: "nama@perusahaan.com"
 - inputText: "petugasgudang@"
-- tapOn:
-    hintText: "Minimal 6 karakter"
+- tapOn: "Minimal 6 karakter"
 - inputText: "warehouse123"
 - tapOn: "Masuk Sekarang"
 - assertVisible: "Format email tidak valid"
@@ -36,12 +34,10 @@ appId: com.warehouse.box_management_system
 # ------------------------------------------------------------------------------
 # C. Validasi Password Kurang dari 6 Karakter (Boundary Test)
 # ------------------------------------------------------------------------------
-- tapOn:
-    hintText: "nama@perusahaan.com"
+- tapOn: "nama@perusahaan.com"
 - eraseText
 - inputText: "admin@gudang.com"
-- tapOn:
-    hintText: "Minimal 6 karakter"
+- tapOn: "Minimal 6 karakter"
 - eraseText
 - inputText: "12345"
 - tapOn: "Masuk Sekarang"

@@ -77,8 +77,7 @@ appId: com.warehouse.box_management_system
 - assertVisible: "Input Kode / UUID Manual"
 
 # Masukkan Kode Box Default
-- tapOn:
-    hintText: "Contoh: BOX-STD-001 atau UUID"
+- tapOn: "Contoh: BOX-STD-001 atau UUID"
 - inputText: "BOX-STD-001"
 - tapOn: "Cari Box"
 

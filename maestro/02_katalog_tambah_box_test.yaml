@@ -30,8 +30,7 @@ appId: com.warehouse.box_management_system
 - tapOn: "Acak"
 
 # Isi Nama Box
-- tapOn:
-    hintText: "Misal: Kardus Kemasan Ekspor Medium"
+- tapOn: "Misal: Kardus Kemasan Ekspor Medium"
 - inputText: "Box Sparepart Mesin Industri"
 
 # Input Dimensi: Panjang 40, Lebar 30, Tinggi 20 (Volume = 24.00 Liter)
@@ -60,8 +59,7 @@ appId: com.warehouse.box_management_system
     direction: DOWN
 
 # Input Lokasi Rak
-- tapOn:
-    hintText: "Misal: Rak A-02, Pallet 4, Bay 10"
+- tapOn: "Misal: Rak A-02, Pallet 4, Bay 10"
 - eraseText
 - inputText: "Rak B-04"
 
@@ -82,14 +80,12 @@ appId: com.warehouse.box_management_system
 # B. Pencarian & Filter Status Stok Katalog
 # ------------------------------------------------------------------------------
 # Cari Box Berdasarkan Lokasi Rak
-- tapOn:
-    hintText: "Cari Box Code, Nama, atau Lokasi..."
+- tapOn: "Cari Box Code, Nama, atau Lokasi..."
 - inputText: "Rak B-04"
 - assertVisible: "Rak B-04"
 
 # Bersihkan Pencarian
-- tapOn:
-    hintText: "Cari Box Code, Nama, atau Lokasi..."
+- tapOn: "Cari Box Code, Nama, atau Lokasi..."
 - eraseText
 
 # Uji Filter Status Stok
