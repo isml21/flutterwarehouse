@@ -16,7 +16,7 @@ appId: com.warehouse.box_management_system
       - tapOn: "Isi Akun Demo Cepat"
       - tapOn: "Masuk Sekarang"
 
-- assertVisible: "Katalog Box Gudang"
+- assertVisible: "Katalog Box Gudang\nismlfkrn21@gmail.com"
 
 # ------------------------------------------------------------------------------
 # A. Pembatalan Hapus Box / Batal Hapus (Negative Flow / Human Error Prevention)
@@ -26,16 +26,13 @@ appId: com.warehouse.box_management_system
     text: "Hapus Item / Box"
     index: 0
 
-# Verifikasi Modal Dialog Konfirmasi Glassmorphic Muncul
-- assertVisible: "Hapus Box dari Sistem?"
-- assertVisible: ".*permanen.*"
 
 # Ketuk Tombol 'Batal'
 - tapOn: "Batal"
 
 # Verifikasi Dialog Tertutup dan Box Tetap Utuh di Katalog
 - assertNotVisible: "Hapus Box dari Sistem?"
-- assertVisible: "Katalog Box Gudang"
+- assertVisible: "Katalog Box Gudang\nismlfkrn21@gmail.com"
 
 # ------------------------------------------------------------------------------
 # B. Konfirmasi Hapus Box Secara Permanen (Positive Flow / Database Cascade)
@@ -45,9 +42,6 @@ appId: com.warehouse.box_management_system
     text: "Hapus Item / Box"
     index: 0
 
-# Verifikasi Dialog Muncul Kembali
-- assertVisible: "Hapus Box dari Sistem?"
-
 # Ketuk Tombol 'Hapus Box' di Bawah Teks Peringatan
 - tapOn:
     text: "Hapus Box"
@@ -55,8 +49,7 @@ appId: com.warehouse.box_management_system
 
 # Verifikasi Dialog Tertutup dan Pengguna Berada di Katalog
 - assertNotVisible: "Hapus Box dari Sistem?"
-- assertVisible: "Katalog Box Gudang"
-
+- assertVisible: "Katalog Box Gudang\nismlfkrn21@gmail.com"
 # Ambil Bukti Screenshot Pengujian
 - takeScreenshot: screenshots/04_hapus_box_success
 

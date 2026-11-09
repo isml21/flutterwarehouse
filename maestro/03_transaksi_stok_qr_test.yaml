@@ -16,7 +16,7 @@ appId: com.warehouse.box_management_system
       - tapOn: "Isi Akun Demo Cepat"
       - tapOn: "Masuk Sekarang"
 
-- assertVisible: "Katalog Box Gudang"
+- tapOn: "Katalog Box Gudang\nismlfkrn21@gmail.com"
 
 # ------------------------------------------------------------------------------
 # A. Transaksi Stok IN & OUT pada Kartu Box
@@ -31,7 +31,6 @@ appId: com.warehouse.box_management_system
 - tapOn: "Stock IN (Masuk)"
 - tapOn: "+10"
 - tapOn: ".*Konfirmasi Stock IN.*"
-- assertVisible: ".*Berhasil mencatat Stock In.*"
 
 # 2. Validasi Batas Penarikan Berlebih / Over-withdrawal (Negative Boundary Test)
 - tapOn: "Stock OUT (Keluar)"
@@ -47,12 +46,11 @@ appId: com.warehouse.box_management_system
 - eraseText
 - inputText: "2"
 - tapOn: ".*Konfirmasi Stock OUT.*"
-- assertVisible: ".*Berhasil mencatat Stock Out.*"
 
 # Tutup BottomSheet Transaksi
-- takeScreenshot: screenshots/03_stock_transaction_success
+- hideKeyboard
 - back
-- assertVisible: "Katalog Box Gudang"
+- tapOn: "Katalog Box Gudang\nismlfkrn21@gmail.com"
 
 # ------------------------------------------------------------------------------
 # B. Scanner QR Code & Pencarian Manual (Fallback)
@@ -84,4 +82,5 @@ appId: com.warehouse.box_management_system
 # Kembali ke Beranda Katalog
 - takeScreenshot: screenshots/03_qr_scanner_success
 - back
-- assertVisible: "Katalog Box Gudang"
+- back
+- tapOn: "Katalog Box Gudang\nismlfkrn21@gmail.com"

@@ -10,7 +10,7 @@ appId: com.warehouse.box_management_system
     clearState: true
 
 # 2. Pastikan Layar Login Terbuka
-- assertVisible: "Sistem Manajemen Box"
+- assertVisible: "MyWarehouse"
 - assertVisible: "Warehouse Inventory & QR Tracking System"
 - assertVisible: "Masuk ke Sistem"
 
@@ -24,9 +24,9 @@ appId: com.warehouse.box_management_system
 # ------------------------------------------------------------------------------
 # B. Validasi Format Email Tidak Valid (Negative Test)
 # ------------------------------------------------------------------------------
-- tapOn: "nama@perusahaan.com"
-- inputText: "petugasgudang@"
-- tapOn: "Minimal 6 karakter"
+- tapOn: "nama@perusahaan.com, Email wajib diisi"
+- inputText: "petugasgudang"
+- tapOn: "Minimal 6 karakter, Kata sandi wajib diisi"
 - inputText: "warehouse123"
 - tapOn: "Masuk Sekarang"
 - assertVisible: "Format email tidak valid"
@@ -34,24 +34,30 @@ appId: com.warehouse.box_management_system
 # ------------------------------------------------------------------------------
 # C. Validasi Password Kurang dari 6 Karakter (Boundary Test)
 # ------------------------------------------------------------------------------
-- tapOn: "nama@perusahaan.com"
+- tapOn: "petugasgudang"
 - eraseText
 - inputText: "admin@gudang.com"
-- tapOn: "Minimal 6 karakter"
+- tapOn: "••••••••••••"
 - eraseText
 - inputText: "12345"
 - tapOn: "Masuk Sekarang"
 - assertVisible: "Kata sandi minimal 6 karakter"
 
 # ------------------------------------------------------------------------------
-# D. Fitur Isi Akun Demo Cepat & Login Berhasil (Positive Test)
+# C. Validasi Password Kurang dari 6 Karakter (Boundary Test)
 # ------------------------------------------------------------------------------
-- tapOn: "Isi Akun Demo Cepat"
-- assertVisible: "Kredensial Demo terisi otomatis."
+- tapOn: "admin@gudang.com"
+- eraseText
+- inputText: "ismlfkrn21@gmail"
+- tapOn: "•••••"
+- eraseText
+- inputText: "210904"
 - tapOn: "Masuk Sekarang"
+- assertVisible: "Selamat datang kembali!"
+
 
 # Verifikasi Berhasil Masuk ke Beranda Katalog Box
-- assertVisible: "Katalog Box Gudang"
+- assertVisible: "Katalog Box Gudang\nismlfkrn21@gmail.com"
 - assertVisible: "Total Jenis"
 - assertVisible: "Total Unit"
 - takeScreenshot: screenshots/01_auth_success

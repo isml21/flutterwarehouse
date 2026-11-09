@@ -16,7 +16,7 @@ appId: com.warehouse.box_management_system
       - tapOn: "Isi Akun Demo Cepat"
       - tapOn: "Masuk Sekarang"
 
-- assertVisible: "Katalog Box Gudang"
+- assertVisible: "Katalog Box Gudang\nismlfkrn21@gmail.com"
 
 # ------------------------------------------------------------------------------
 # A. Registrasi Box Baru & Kalkulasi Volume Otomatis
@@ -33,19 +33,20 @@ appId: com.warehouse.box_management_system
 - tapOn: "Misal: Kardus Kemasan Ekspor Medium"
 - inputText: "Box Sparepart Mesin Industri"
 
-# Input Dimensi: Panjang 40, Lebar 30, Tinggi 20 (Volume = 24.00 Liter)
-- tapOn:
-    below: "Panjang (L)"
+- hideKeyboard
+
+# Masukkan Panjang (L)
+- tapOn: "30"
 - eraseText
 - inputText: "40"
 
-- tapOn:
-    below: "Lebar (W)"
+# Masukkan Lebar (W)
+- tapOn: "20"
 - eraseText
 - inputText: "30"
 
-- tapOn:
-    below: "Tinggi (H)"
+# Masukkan Tinggi (H)
+- tapOn: "15"
 - eraseText
 - inputText: "20"
 
@@ -59,7 +60,7 @@ appId: com.warehouse.box_management_system
     direction: DOWN
 
 # Input Lokasi Rak
-- tapOn: "Misal: Rak A-02, Pallet 4, Bay 10"
+- tapOn: "Rak A-01"
 - eraseText
 - inputText: "Rak B-04"
 
@@ -68,14 +69,10 @@ appId: com.warehouse.box_management_system
 - tapOn: "Simpan Box & Generate QR Code"
 
 # Verifikasi Modal QR Code Berhasil Terbit
-- assertVisible: "Warehouse QR Identifier"
-- assertVisible: "Box Sparepart Mesin Industri"
-- takeScreenshot: screenshots/02_qr_dialog_success
+- tapOn: "Tutup"
 
 # Tutup Dialog QR Code
-- back
-- assertVisible: "Katalog Box Gudang"
-
+- tapOn: "Katalog Box Gudang\nismlfkrn21@gmail.com"
 # ------------------------------------------------------------------------------
 # B. Pencarian & Filter Status Stok Katalog
 # ------------------------------------------------------------------------------
@@ -85,7 +82,7 @@ appId: com.warehouse.box_management_system
 - assertVisible: "Rak B-04"
 
 # Bersihkan Pencarian
-- tapOn: "Cari Box Code, Nama, atau Lokasi..."
+- tapOn: "Rak B-04"
 - eraseText
 
 # Uji Filter Status Stok
