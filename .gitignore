@@ -52,6 +52,4 @@ app.*.map.json
 __pycache__/
 *.pyc
 
-# Local Presentation Notes (Do not track in git)
-SCRIPT_PRESENTASI_UTS.md
 
